@@ -22,6 +22,27 @@ class InheritingBegin extends StatefulWidget
 }
 
 class _InheritingBeginState extends State<InheritingBegin> with SingleTickerProviderStateMixin{
+  static int decsion=0;
+  void _login()
+  {
+    setState(() {
+      decsion=1;
+    });
+  }
+  void _login_verified()
+  {
+    setState(() {
+      decsion=0;
+    });
+  }
+  void _regester()
+  {
+
+  }
+  void _regester_verified()
+  {
+
+  }
   AnimationController animController1;
 
 
@@ -135,8 +156,8 @@ void initState() {
  
   @override
   Widget build(BuildContext context) {
-
-      return Scaffold(
+      if(decsion==0){
+        return Scaffold(
       backgroundColor:Color.fromRGBO(r, g, b, 1),
       body:DecoratedBox(
         position: DecorationPosition.background,
@@ -150,7 +171,8 @@ void initState() {
         
       ),
 
-      child:Container(
+      child:
+      Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         child: Column(
@@ -176,23 +198,25 @@ void initState() {
                        children: <Widget>[
                        Padding(
                          padding: const EdgeInsets.all(2.0),
-                         child: Center(child: Text("AlREADY A USER")),
+                         child: Center(child: Text("AlREADY A USER",style: TextStyle(color:Colors.white),)),
                        ),
-                       FlatButton(onPressed: (){}, child: Text("LOGIN"),shape:RoundedRectangleBorder(
+                       FlatButton(onPressed: (){
+                         _login();
+                       }, child: Text("LOGIN"),shape:RoundedRectangleBorder(
                          borderRadius:BorderRadius.circular(20)
                        
                        ),
-                       color: Colors.yellow,
+                       color: Colors.orange,
                        ),
                         Padding(
                          padding: const EdgeInsets.all(2.0),
-                         child: Center(child: Text("NO! not a problem")),
+                         child: Center(child: Text("NO! not a problem",style: TextStyle(color:Colors.white),)),
                        ),
-                        FlatButton(onPressed: (){}, child: Text("Regester"),shape:RoundedRectangleBorder(
+                        FlatButton(onPressed: (){}, child: Text("Regester",style: TextStyle(color:Colors.black),),shape:RoundedRectangleBorder(
                          borderRadius:BorderRadius.circular(20)
                          
                        ),
-                       color: Colors.yellow,
+                       color: Colors.orange,
                        ),
 
                       ],),
@@ -208,7 +232,186 @@ void initState() {
       
       
     );
-    
-   
+    }
+      
+if(decsion==1)
+{
+  return Scaffold(
+      backgroundColor:Color.fromRGBO(r, g, b, 1),
+      body:DecoratedBox(
+        position: DecorationPosition.background,
+        
+        decoration: BoxDecoration(
+
+          image: DecorationImage(image: AssetImage('images/fitness.png'),
+          fit: BoxFit.fill
+          )
+
+        
+      ),
+
+      child:
+          Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            
+            Card(
+              color:Color.fromRGBO(r, g, b, 1),
+              child:Container(
+                width: MediaQuery.of(context).size.width-(5*MediaQuery.of(context).size.width/100),
+                height: MediaQuery.of(context).size.height-(60*MediaQuery.of(context).size.height/100),
+              
+                  
+                 child: Container(
+                   width: MediaQuery.of(context).size.width-(5*MediaQuery.of(context).size.width/100),
+                height: MediaQuery.of(context).size.height-(60*MediaQuery.of(context).size.height/100),
+                   child: Card(
+                     color: Color.fromRGBO(39, 47, 55, 1),
+                                        child: Column(
+                       mainAxisAlignment: MainAxisAlignment.start,
+                       crossAxisAlignment: CrossAxisAlignment.center,
+                       children: <Widget>[
+                                   //text username/email
+                                   Padding(
+                                     padding: const EdgeInsets.all(8.0),
+                                     child: Text("UserName/Email",style: TextStyle(color:Colors.white),),
+                                   ),
+                                   Padding(
+                                     padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                                     child: TextField(cursorWidth: 3.0,cursorColor: Color.fromRGBO(r, g, b, 1),
+                                     style: TextStyle(color: Colors.orange),
+                                     
+                                     ),
+                                   ),
+                                   Padding(
+                                     padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+                                     child: Text("PassWord",style: TextStyle(color:Colors.white),),
+                                   ),
+                                   Padding(
+                                     padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                                     child: TextField(cursorWidth: 3.0,cursorColor: Color.fromRGBO(r, g, b, 1),
+                                     style: TextStyle(color: Colors.orange),
+                                     ),
+                                   ),
+                                   Padding(
+                                     padding: const EdgeInsets.all(8.0),
+                                     child: FlatButton(onPressed: (){
+                                       _login_verified();
+                                       }, child: Text("LOGIN"),shape:RoundedRectangleBorder(
+                                       borderRadius:BorderRadius.circular(20)
+                                       ),
+                                       color: Colors.orange,
+                                       ),
+                                   ),
+
+                      
+                      ],),
+                   ),
+                 )
+                
+              )
+            )
+        ],),
+      ), 
+      
+      )
+      
+      
+    );
+
+}
+if(decsion==3)
+{
+return Scaffold(
+      backgroundColor:Color.fromRGBO(r, g, b, 1),
+      body:DecoratedBox(
+        position: DecorationPosition.background,
+        
+        decoration: BoxDecoration(
+
+          image: DecorationImage(image: AssetImage('images/fitness.png'),
+          fit: BoxFit.fill
+          )
+
+        
+      ),
+
+      child:
+          Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            
+            Card(
+              color:Color.fromRGBO(r, g, b, 1),
+              child:Container(
+                width: MediaQuery.of(context).size.width-(5*MediaQuery.of(context).size.width/100),
+                height: MediaQuery.of(context).size.height-(60*MediaQuery.of(context).size.height/100),
+              
+                  
+                 child: Container(
+                   width: MediaQuery.of(context).size.width-(5*MediaQuery.of(context).size.width/100),
+                height: MediaQuery.of(context).size.height-(60*MediaQuery.of(context).size.height/100),
+                   child: Card(
+                     color: Color.fromRGBO(39, 47, 55, 1),
+                                        child: Column(
+                       mainAxisAlignment: MainAxisAlignment.start,
+                       crossAxisAlignment: CrossAxisAlignment.center,
+                       children: <Widget>[
+                                   //text username/email
+                                   Padding(
+                                     padding: const EdgeInsets.all(8.0),
+                                     child: Text("UserName/Email",style: TextStyle(color:Colors.white),),
+                                   ),
+                                   Padding(
+                                     padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                                     child: TextField(cursorWidth: 3.0,cursorColor: Color.fromRGBO(r, g, b, 1),
+                                     style: TextStyle(color: Colors.orange),
+                                     
+                                     ),
+                                   ),
+                                   Padding(
+                                     padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
+                                     child: Text("PassWord",style: TextStyle(color:Colors.white),),
+                                   ),
+                                   Padding(
+                                     padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                                     child: TextField(cursorWidth: 3.0,cursorColor: Color.fromRGBO(r, g, b, 1),
+                                     style: TextStyle(color: Colors.orange),
+                                     ),
+                                   ),
+                                   Padding(
+                                     padding: const EdgeInsets.all(8.0),
+                                     child: FlatButton(onPressed: (){
+                                       _login_verified();
+                                       }, child: Text("LOGIN"),shape:RoundedRectangleBorder(
+                                       borderRadius:BorderRadius.circular(20)
+                                       ),
+                                       color: Colors.orange,
+                                       ),
+                                   ),
+
+                      
+                      ],),
+                   ),
+                 )
+                
+              )
+            )
+        ],),
+      ), 
+      
+      )
+      
+      
+    );
+}     
 }
 }
