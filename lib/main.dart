@@ -23,7 +23,7 @@ class InheritingBegin extends StatefulWidget
 
 class _InheritingBeginState extends State<InheritingBegin> with SingleTickerProviderStateMixin{
   static int decsion=0;
-  void _login()
+ /* void _login()
   {
     setState(() {
       decsion=1;
@@ -42,7 +42,8 @@ class _InheritingBeginState extends State<InheritingBegin> with SingleTickerProv
   void _regester_verified()
   {
 
-  }
+  }*/
+
   AnimationController animController1;
 
 
@@ -153,7 +154,8 @@ void initState() {
 
 
 
- 
+
+  
   @override
   Widget build(BuildContext context) {
       if(decsion==0){
@@ -203,7 +205,9 @@ void initState() {
                          //removed the text "already user"
                        Padding(
                          padding: const EdgeInsets.all(8.0),
-                         child: FlatButton(onPressed: (){
+                         child: FlatButton(
+                           
+                           onPressed: (){
                           _login_bottomsheet(context,1);
                          }, child: Text("LOGIN"),shape:RoundedRectangleBorder(
                            borderRadius:BorderRadius.circular(20)
@@ -479,8 +483,8 @@ void _login_bottomsheet(context,int seperator)
       );
        }else{
          return Container(
-        height: MediaQuery.of(context).size.height-(50*MediaQuery.of(context).size.height/100),
-        width: MediaQuery.of(context).size.width,
+        //height: MediaQuery.of(context).size.height-(50*MediaQuery.of(context).size.height/100),
+        //width: MediaQuery.of(context).size.width,
        
         
           child:
