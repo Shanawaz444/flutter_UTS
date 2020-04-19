@@ -200,30 +200,30 @@ void initState() {
                        mainAxisAlignment: MainAxisAlignment.center,
                        crossAxisAlignment: CrossAxisAlignment.center,
                        children: <Widget>[
+                         //removed the text "already user"
                        Padding(
-                         padding: const EdgeInsets.all(2.0),
-                         child: Center(child: Text("AlREADY A USER",style: TextStyle(color:Colors.white),)),
-                       ),
-                       FlatButton(onPressed: (){
-                        _login_bottomsheet(context,1);
-                       }, child: Text("LOGIN"),shape:RoundedRectangleBorder(
-                         borderRadius:BorderRadius.circular(20)
-                       
-                       ),
-                       color: Color.fromRGBO(248,220,4,1),
-                       ),
-                        Padding(
-                         padding: const EdgeInsets.all(2.0),
-                         child: Center(child: Text("NO! NOT A PROBLEM",style: TextStyle(color:Colors.white),)),
-                       ),
-                        FlatButton(onPressed: (){
-                          _login_bottomsheet(context, 2);
-                        }, child: Text("REGISTER",style: TextStyle(color:Colors.black),),shape:RoundedRectangleBorder(
-                         borderRadius:BorderRadius.circular(20)
+                         padding: const EdgeInsets.all(8.0),
+                         child: FlatButton(onPressed: (){
+                          _login_bottomsheet(context,1);
+                         }, child: Text("LOGIN"),shape:RoundedRectangleBorder(
+                           borderRadius:BorderRadius.circular(20)
                          
+                         ),
+                         color: Color.fromRGBO(248,220,4,1),
+                         ),
+                       ),
+                        //removed the text no not a problem
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: FlatButton(onPressed: (){
+                            _login_bottomsheet(context, 2);
+                          }, child: Text("REGISTER",style: TextStyle(color:Colors.black),),shape:RoundedRectangleBorder(
+                           borderRadius:BorderRadius.circular(20)
+                           
                        ),
                        color: Color.fromRGBO(248,220,4,1),
                        ),
+                        ),
 
                       ],),
                    ),
