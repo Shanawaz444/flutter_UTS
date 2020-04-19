@@ -181,19 +181,23 @@ void initState() {
           children: <Widget>[
             
             Card(
+              elevation: 10,
+              shape: CircleBorder(
+              ),
               color:Color.fromRGBO(r, g, b, 1),
               child:Container(
-                width: MediaQuery.of(context).size.width-(5*MediaQuery.of(context).size.width/100),
-                height: MediaQuery.of(context).size.height-(75*MediaQuery.of(context).size.height/100),
+                width: MediaQuery.of(context).size.width+(5*MediaQuery.of(context).size.width/100),
+                height: MediaQuery.of(context).size.height-(70*MediaQuery.of(context).size.height/100),
               
                   
                  child: Container(
                    width: MediaQuery.of(context).size.width-(5*MediaQuery.of(context).size.width/100),
-                height: MediaQuery.of(context).size.height-(75*MediaQuery.of(context).size.height/100),
+                height: MediaQuery.of(context).size.height-(70*MediaQuery.of(context).size.height/100),
                    child: Card(
+                     shape: CircleBorder(),
                      color: Color.fromRGBO(39, 47, 55, 1),
                                         child: Column(
-                       mainAxisAlignment: MainAxisAlignment.start,
+                       mainAxisAlignment: MainAxisAlignment.center,
                        crossAxisAlignment: CrossAxisAlignment.center,
                        children: <Widget>[
                        Padding(
@@ -201,22 +205,24 @@ void initState() {
                          child: Center(child: Text("AlREADY A USER",style: TextStyle(color:Colors.white),)),
                        ),
                        FlatButton(onPressed: (){
-                        _login_bottomsheet(context);
+                        _login_bottomsheet(context,1);
                        }, child: Text("LOGIN"),shape:RoundedRectangleBorder(
                          borderRadius:BorderRadius.circular(20)
                        
                        ),
-                       color: Colors.orange,
+                       color: Color.fromRGBO(248,220,4,1),
                        ),
                         Padding(
                          padding: const EdgeInsets.all(2.0),
-                         child: Center(child: Text("NO! not a problem",style: TextStyle(color:Colors.white),)),
+                         child: Center(child: Text("NO! NOT A PROBLEM",style: TextStyle(color:Colors.white),)),
                        ),
-                        FlatButton(onPressed: (){}, child: Text("Regester",style: TextStyle(color:Colors.black),),shape:RoundedRectangleBorder(
+                        FlatButton(onPressed: (){
+                          _login_bottomsheet(context, 2);
+                        }, child: Text("REGISTER",style: TextStyle(color:Colors.black),),shape:RoundedRectangleBorder(
                          borderRadius:BorderRadius.circular(20)
                          
                        ),
-                       color: Colors.orange,
+                       color: Color.fromRGBO(248,220,4,1),
                        ),
 
                       ],),
@@ -324,7 +330,7 @@ void initState() {
     );
 
 }*/
-if(decsion==3)
+/*if(decsion==3)
 {
 return Scaffold(
       backgroundColor:Color.fromRGBO(r, g, b, 1),
@@ -412,28 +418,115 @@ return Scaffold(
       
       
     );
-}     
+}     */
 }
-void _login_bottomsheet(context)
+void _login_bottomsheet(context,int seperator)
   {
     showModalBottomSheet(context: context, 
-    shape: CircleBorder(),
-    elevation: 0,
+    shape: RoundedRectangleBorder(borderRadius:BorderRadius.only(topLeft:Radius.circular(30),topRight:Radius.circular(30))),
+    elevation: 10,
+    backgroundColor: Color.fromRGBO(39, 47, 55, 1),
     builder: (BuildContext c){
-      return Container(
-        height: MediaQuery.of(context).size.height-(55*MediaQuery.of(context).size.height/100),
+       if(seperator==1)
+       {
+          return Container(
+        height: MediaQuery.of(context).size.height-(50*MediaQuery.of(context).size.height/100),
         width: MediaQuery.of(context).size.width,
        
-        child:SingleChildScrollView(
+        
           child:
           Column(
-            
+            mainAxisAlignment: MainAxisAlignment.center,
+
             children:<Widget>[
-              
+                                  Padding(
+                                     padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+                                     child: Text("UserName/Email",style: TextStyle(color:Colors.white),),
+                                   ),  
+                                   Padding(
+                                     padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                     child: TextField(cursorWidth: 3.0,cursorColor: Color.fromRGBO(r, g, b, 1),
+                                     style: TextStyle(color: Colors.orange),
+                                     
+                                     ),
+                                   ),
+                                   Padding(
+                                     padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+                                     child: Text("Password",style: TextStyle(color:Colors.white),),
+                                   ),
+                                   Padding(
+                                     padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+                                     child: TextField(cursorWidth: 3.0,cursorColor: Color.fromRGBO(r, g, b, 1),
+                                     style: TextStyle(color: Colors.orange),
+                                     
+                                     ),
+                                   ), 
+                                   Padding(
+                                     padding: const EdgeInsets.all(8.0),
+                                     child: FlatButton(onPressed: (){
+                                       
+                                       }, child: Text("LOGIN"),shape:RoundedRectangleBorder(
+                                       borderRadius:BorderRadius.circular(20)
+                                       ),
+                                       color: Colors.orange,
+                                       ),
+                                   ),
+
+
             ]
           )
-        )
+        
       );
+       }else{
+         return Container(
+        height: MediaQuery.of(context).size.height-(50*MediaQuery.of(context).size.height/100),
+        width: MediaQuery.of(context).size.width,
+       
+        
+          child:
+          SingleChildScrollView(
+            child:Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+
+            children:<Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("REGISTER",style: TextStyle(color:Colors.white),),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextField(),
+              ),
+                               Padding(
+                                     padding: const EdgeInsets.all(8.0),
+                                     child: FlatButton(onPressed: (){
+                                       
+                                       }, child: Text("REGISTER"),shape:RoundedRectangleBorder(
+                                       borderRadius:BorderRadius.circular(20)
+                                       ),
+                                       color: Colors.orange,
+                                       ),
+                                   ),
+            ]
+          )
+          )
+        
+      );
+
+       }
+      
 
     });
   }
