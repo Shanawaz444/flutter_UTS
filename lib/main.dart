@@ -132,7 +132,7 @@ void initState() {
     animController1.stop();
     super.dispose();
   }
-
+  
 
 
 
@@ -201,7 +201,7 @@ void initState() {
                          child: Center(child: Text("AlREADY A USER",style: TextStyle(color:Colors.white),)),
                        ),
                        FlatButton(onPressed: (){
-                         _login();
+                        _login_bottomsheet(context);
                        }, child: Text("LOGIN"),shape:RoundedRectangleBorder(
                          borderRadius:BorderRadius.circular(20)
                        
@@ -234,7 +234,7 @@ void initState() {
     );
     }
       
-if(decsion==1)
+/*if(decsion==1)
 {
   return Scaffold(
       backgroundColor:Color.fromRGBO(r, g, b, 1),
@@ -323,7 +323,7 @@ if(decsion==1)
       
     );
 
-}
+}*/
 if(decsion==3)
 {
 return Scaffold(
@@ -414,4 +414,27 @@ return Scaffold(
     );
 }     
 }
+void _login_bottomsheet(context)
+  {
+    showModalBottomSheet(context: context, 
+    shape: CircleBorder(),
+    elevation: 0,
+    builder: (BuildContext c){
+      return Container(
+        height: MediaQuery.of(context).size.height-(55*MediaQuery.of(context).size.height/100),
+        width: MediaQuery.of(context).size.width,
+       
+        child:SingleChildScrollView(
+          child:
+          Column(
+            
+            children:<Widget>[
+              
+            ]
+          )
+        )
+      );
+
+    });
+  }
 }
