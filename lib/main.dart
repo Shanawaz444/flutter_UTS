@@ -460,6 +460,13 @@ void _login_bottomsheet(context,int seperator)
                                    Padding(
                                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
                                      child: TextFormField(
+                                       validator: (somevalue){
+                                     if(somevalue.isEmpty)
+                                       {
+                                     return'Cannot leave empty!';
+                                      }
+                                       return null;
+                                        },
                                        decoration: InputDecoration(
                                          hintText:"Enter valid Username or Email..",
                                           border: const OutlineInputBorder()
@@ -473,7 +480,13 @@ void _login_bottomsheet(context,int seperator)
                                    Padding(
                                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
                                      child: TextFormField(
-                                       
+                                       validator: (somevalue){
+                                     if(somevalue.isEmpty)
+                                         {
+                                         return'Cannot leave empty!';
+                                           }
+                                         return null;
+                                              },
                                        
                                        decoration: InputDecoration(
                                          hintText:"Enter valid Password..",
@@ -524,6 +537,13 @@ void _login_bottomsheet(context,int seperator)
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                  validator: (somevalue){
+                    if(somevalue.isEmpty)
+                    {
+                      return'Cannot leave empty!';
+                    }
+                    return null;
+                  },
                   decoration: InputDecoration(
                     hintText:"Enter valid Email..",
                     border: const OutlineInputBorder()
@@ -533,6 +553,13 @@ void _login_bottomsheet(context,int seperator)
                Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                  validator: (somevalue){
+                    if(somevalue.isEmpty)
+                    {
+                      return'Cannot leave empty!';
+                    }
+                    return null;
+                  },
                   decoration: InputDecoration(
                     hintText:"Enter unique UserName..",
                     border: const OutlineInputBorder()
@@ -542,6 +569,13 @@ void _login_bottomsheet(context,int seperator)
                Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                  validator: (somevalue){
+                    if(somevalue.isEmpty)
+                    {
+                      return'Cannot leave empty!';
+                    }
+                    return null;
+                  },
                   decoration: InputDecoration(
                     hintText:"Enter valid Password..",
                     border: const OutlineInputBorder()
@@ -551,6 +585,13 @@ void _login_bottomsheet(context,int seperator)
                Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                  validator: (somevalue){
+                    if(somevalue.isEmpty)
+                    {
+                      return'Cannot leave empty!';
+                    }
+                    return null;
+                  },
                   decoration: InputDecoration(
                     hintText:"Enter valid Ph.number..",
                     border: const OutlineInputBorder()
