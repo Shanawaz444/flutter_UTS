@@ -23,6 +23,7 @@ class InheritingBegin extends StatefulWidget
 
 class _InheritingBeginState extends State<InheritingBegin> with SingleTickerProviderStateMixin{
   static int decsion=0;
+  TextEditingController _usernameLogin,_passwordLogin,_regusername,_regemail,_regpassword,_regphonenumber;
  /* void _login()
   {
     setState(() {
@@ -53,6 +54,12 @@ class _InheritingBeginState extends State<InheritingBegin> with SingleTickerProv
 
 void initState() {
   super.initState();
+  _usernameLogin=TextEditingController();
+  _passwordLogin=TextEditingController();
+  _regpassword=TextEditingController();
+  _regemail=TextEditingController();
+  _regusername=TextEditingController();
+  _regphonenumber=TextEditingController();
   animController1 = AnimationController(
     duration: Duration(seconds: 2),
     vsync: this,
@@ -134,28 +141,31 @@ void initState() {
     super.dispose();
   }
   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+void _checkingLoginDetails()
+{
   
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
       if(decsion==0){
@@ -443,24 +453,28 @@ void _login_bottomsheet(context,int seperator)
             mainAxisAlignment: MainAxisAlignment.center,
 
             children:<Widget>[
-                                  Padding(
-                                     padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                                     child: Text("UserName/Email",style: TextStyle(color:Colors.white),),
-                                   ),  
+                                  
                                    Padding(
-                                     padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                                     child: TextField(cursorWidth: 3.0,cursorColor: Color.fromRGBO(r, g, b, 1),
+                                     padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                                     child: TextField(
+                                       decoration: InputDecoration(
+                                         hintText:"Enter valid Username or Email..",
+                                          border: const OutlineInputBorder()
+                                       ),
+                                       cursorWidth: 3.0,cursorColor: Color.fromRGBO(r, g, b, 1),
                                      style: TextStyle(color: Colors.orange),
                                      
                                      ),
                                    ),
+                                   
                                    Padding(
-                                     padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                                     child: Text("Password",style: TextStyle(color:Colors.white),),
-                                   ),
-                                   Padding(
-                                     padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                                     child: TextField(cursorWidth: 3.0,cursorColor: Color.fromRGBO(r, g, b, 1),
+                                     padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                                     child: TextField(
+                                       
+                                       decoration: InputDecoration(
+                                         hintText:"Enter valid Password..",
+                                          border: const OutlineInputBorder()),
+                                       cursorWidth: 3.0,cursorColor: Color.fromRGBO(r, g, b, 1),
                                      style: TextStyle(color: Colors.orange),
                                      
                                      ),
