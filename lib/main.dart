@@ -468,7 +468,7 @@ void _login_bottomsheet(context,int seperator)
                                        }, child: Text("LOGIN"),shape:RoundedRectangleBorder(
                                        borderRadius:BorderRadius.circular(20)
                                        ),
-                                       color: Colors.orange,
+                                       color: Color.fromRGBO(248,220,4,1),
                                        ),
                                    ),
 
@@ -495,19 +495,39 @@ void _login_bottomsheet(context,int seperator)
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextField(),
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText:"Enter valid Email..",
+                    border: const OutlineInputBorder()
+                  ),
+                ),
               ),
-              Padding(
+               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextField(),
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText:"Enter unique UserName..",
+                    border: const OutlineInputBorder()
+                  ),
+                ),
               ),
-              Padding(
+               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextField(),
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText:"Enter valid Password..",
+                    border: const OutlineInputBorder()
+                  ),
+                ),
               ),
-              Padding(
+               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextField(),
+                child: TextField(
+                  decoration: InputDecoration(
+                    hintText:"Enter valid Ph.number..",
+                    border: const OutlineInputBorder()
+                  ),
+                ),
               ),
                                Padding(
                                      padding: const EdgeInsets.all(8.0),
@@ -516,7 +536,7 @@ void _login_bottomsheet(context,int seperator)
                                        }, child: Text("REGISTER"),shape:RoundedRectangleBorder(
                                        borderRadius:BorderRadius.circular(20)
                                        ),
-                                       color: Colors.orange,
+                                       color: Color.fromRGBO(248,220,4,1),
                                        ),
                                    ),
             ]
