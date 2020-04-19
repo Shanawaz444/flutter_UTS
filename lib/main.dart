@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import 'mainLOGOPAGE.dart';
@@ -22,6 +23,8 @@ class InheritingBegin extends StatefulWidget
 }
 
 class _InheritingBeginState extends State<InheritingBegin> with SingleTickerProviderStateMixin{
+  final _loginfirebase = FirebaseDatabase.instance.reference();
+  final _registerfirebase = FirebaseDatabase.instance.reference();
   static int decsion=0;
   TextEditingController _usernameLogin,_passwordLogin,_regusername,_regemail,_regpassword,_regphonenumber;
  /* void _login()
@@ -143,7 +146,7 @@ void initState() {
   
 void _checkingLoginDetails()
 {
-  
+
 }
 
 
@@ -456,7 +459,7 @@ void _login_bottomsheet(context,int seperator)
                                   
                                    Padding(
                                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-                                     child: TextField(
+                                     child: TextFormField(
                                        decoration: InputDecoration(
                                          hintText:"Enter valid Username or Email..",
                                           border: const OutlineInputBorder()
@@ -469,7 +472,8 @@ void _login_bottomsheet(context,int seperator)
                                    
                                    Padding(
                                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-                                     child: TextField(
+                                     child: TextFormField(
+                                       
                                        
                                        decoration: InputDecoration(
                                          hintText:"Enter valid Password..",
@@ -483,13 +487,19 @@ void _login_bottomsheet(context,int seperator)
                                      padding: const EdgeInsets.all(8.0),
                                      child: FlatButton(onPressed: (){
                                        
+
+
+
+
+
                                        }, child: Text("LOGIN"),shape:RoundedRectangleBorder(
                                        borderRadius:BorderRadius.circular(20)
                                        ),
                                        color: Color.fromRGBO(248,220,4,1),
                                        ),
                                    ),
-
+             
+             
 
             ]
           )
@@ -513,7 +523,7 @@ void _login_bottomsheet(context,int seperator)
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextField(
+                child: TextFormField(
                   decoration: InputDecoration(
                     hintText:"Enter valid Email..",
                     border: const OutlineInputBorder()
@@ -522,7 +532,7 @@ void _login_bottomsheet(context,int seperator)
               ),
                Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextField(
+                child: TextFormField(
                   decoration: InputDecoration(
                     hintText:"Enter unique UserName..",
                     border: const OutlineInputBorder()
@@ -531,7 +541,7 @@ void _login_bottomsheet(context,int seperator)
               ),
                Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextField(
+                child: TextFormField(
                   decoration: InputDecoration(
                     hintText:"Enter valid Password..",
                     border: const OutlineInputBorder()
@@ -540,7 +550,7 @@ void _login_bottomsheet(context,int seperator)
               ),
                Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextField(
+                child: TextFormField(
                   decoration: InputDecoration(
                     hintText:"Enter valid Ph.number..",
                     border: const OutlineInputBorder()
