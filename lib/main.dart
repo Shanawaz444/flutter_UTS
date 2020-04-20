@@ -1,8 +1,6 @@
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-
-import 'mainLOGOPAGE.dart';
-
+import 'package:firebase_database/firebase_database.dart';
+import 'dart:async';
 
 void main() => runApp(MyApp());
 
@@ -23,8 +21,8 @@ class InheritingBegin extends StatefulWidget
 }
 
 class _InheritingBeginState extends State<InheritingBegin> with SingleTickerProviderStateMixin{
-  final _loginfirebase = FirebaseDatabase.instance.reference();
-  final _registerfirebase = FirebaseDatabase.instance.reference();
+  
+  
   static int decsion=0;
   TextEditingController _usernameLogin,_passwordLogin,_regusername,_regemail,_regpassword,_regphonenumber;
  /* void _login()
@@ -146,9 +144,19 @@ void initState() {
   
 void _checkingLoginDetails()
 {
-
+  //final DocumentReference _firestroedoc=Firestore.instance.document()
 }
-
+void createRecord()async
+{
+ final _regesterfirebase=FirebaseDatabase.instance.reference();
+ _regesterfirebase.child("users/userdetails/"+_regusername.text+"/details").set({
+"UserName" :_regusername.text,
+"Email":_regemail.text,
+"Passeord":_regpassword.text,
+"PhoneNumber":_regphonenumber.text
+ });
+    
+}
 
 
 
@@ -173,13 +181,13 @@ void _checkingLoginDetails()
   Widget build(BuildContext context) {
       if(decsion==0){
         return Scaffold(
-      backgroundColor:Color.fromRGBO(r, g, b, 1),
+      backgroundColor:Color.fromRGBO(39, 47, 55,1),
       body:DecoratedBox(
         position: DecorationPosition.background,
         
         decoration: BoxDecoration(
 
-          image: DecorationImage(image: AssetImage('images/fitness.png'),
+          image: DecorationImage(image: AssetImage('images/fistness.png'),
           fit: BoxFit.fill
           )
 
@@ -460,6 +468,7 @@ void _login_bottomsheet(context,int seperator)
                                    Padding(
                                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
                                      child: TextFormField(
+                                       controller: _usernameLogin,
                                        validator: (somevalue){
                                      if(somevalue.isEmpty)
                                        {
@@ -480,6 +489,7 @@ void _login_bottomsheet(context,int seperator)
                                    Padding(
                                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
                                      child: TextFormField(
+                                       controller: _passwordLogin,
                                        validator: (somevalue){
                                      if(somevalue.isEmpty)
                                          {
@@ -537,6 +547,7 @@ void _login_bottomsheet(context,int seperator)
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                  controller: _regusername,
                   validator: (somevalue){
                     if(somevalue.isEmpty)
                     {
@@ -553,6 +564,7 @@ void _login_bottomsheet(context,int seperator)
                Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                  controller: _regemail,
                   validator: (somevalue){
                     if(somevalue.isEmpty)
                     {
@@ -569,6 +581,7 @@ void _login_bottomsheet(context,int seperator)
                Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                  controller: _regpassword,
                   validator: (somevalue){
                     if(somevalue.isEmpty)
                     {
@@ -585,6 +598,7 @@ void _login_bottomsheet(context,int seperator)
                Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextFormField(
+                  controller: _regphonenumber,
                   validator: (somevalue){
                     if(somevalue.isEmpty)
                     {
@@ -602,6 +616,7 @@ void _login_bottomsheet(context,int seperator)
                                      padding: const EdgeInsets.all(8.0),
                                      child: FlatButton(onPressed: (){
                                        
+                                       createRecord();
                                        }, child: Text("REGISTER"),shape:RoundedRectangleBorder(
                                        borderRadius:BorderRadius.circular(20)
                                        ),
