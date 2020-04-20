@@ -55,8 +55,6 @@ final databaseReference=FirebaseDatabase.instance.reference();
 
         
       ),
-
-      
             child: Container(width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
               child: SingleChildScrollView(
@@ -68,9 +66,7 @@ final databaseReference=FirebaseDatabase.instance.reference();
                     filterQuality: FilterQuality.high,
                     width: MediaQuery.of(context).size.width-((50/100)*MediaQuery.of(context).size.width),
                     height: MediaQuery.of(context).size.height-((50/100)*MediaQuery.of(context).size.height),
-                    ),
-                    
-                                    
+                    ),          
                           Align(
                             alignment: Alignment.bottomCenter,
                               child: Container(
