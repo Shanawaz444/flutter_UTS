@@ -1,6 +1,11 @@
+import 'package:fire/registeranimation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
+
+import 'login_animation.dart';
+import 'loginui.dart';
 
 void main() => runApp(MyApp());
 
@@ -52,9 +57,10 @@ class _InheritingBeginState extends State<InheritingBegin> with SingleTickerProv
   static int r=238,b=6,g=6;
   Animation<double> animation1;
   
-
+String errorMessage;
 void initState() {
   super.initState();
+  errorMessage=null;
   _usernameLogin=TextEditingController();
   _passwordLogin=TextEditingController();
   _regpassword=TextEditingController();
@@ -141,311 +147,16 @@ void initState() {
     animController1.stop();
     super.dispose();
   }
-  
+ 
 void _checkingLoginDetails()
 {
   //final DocumentReference _firestroedoc=Firestore.instance.document()
 }
-void createRecord()async
-{
- final _regesterfirebase=FirebaseDatabase.instance.reference();
- _regesterfirebase.child("users/userdetails/"+_regusername.text+"/details").set({
-"UserName" :_regusername.text,
-"Email":_regemail.text,
-"Passeord":_regpassword.text,
-"PhoneNumber":_regphonenumber.text
- });
-    
-}
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  @override
-  Widget build(BuildContext context) {
-      if(decsion==0){
-        return Scaffold(
-      backgroundColor:Color.fromRGBO(39, 47, 55,1),
-      body:DecoratedBox(
-        position: DecorationPosition.background,
-        
-        decoration: BoxDecoration(
-
-          image: DecorationImage(image: AssetImage('images/fistness.png'),
-          fit: BoxFit.fill
-          )
-
-        
-      ),
-
-      child:
-      Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            
-            Card(
-              elevation: 10,
-              shape: CircleBorder(
-              ),
-              color:Color.fromRGBO(r, g, b, 1),
-              child:Container(
-                width: MediaQuery.of(context).size.width+(5*MediaQuery.of(context).size.width/100),
-                height: MediaQuery.of(context).size.height-(70*MediaQuery.of(context).size.height/100),
-              
-                  
-                 child: Container(
-                   width: MediaQuery.of(context).size.width-(5*MediaQuery.of(context).size.width/100),
-                height: MediaQuery.of(context).size.height-(70*MediaQuery.of(context).size.height/100),
-                   child: Card(
-                     shape: CircleBorder(),
-                     color: Color.fromRGBO(39, 47, 55, 1),
-                                        child: Column(
-                       mainAxisAlignment: MainAxisAlignment.center,
-                       crossAxisAlignment: CrossAxisAlignment.center,
-                       children: <Widget>[
-                         //removed the text "already user"
-                       Padding(
-                         padding: const EdgeInsets.all(8.0),
-                         child: FlatButton(
-                           
-                           onPressed: (){
-                          _login_bottomsheet(context,1);
-                         }, child: Text("LOGIN"),shape:RoundedRectangleBorder(
-                           borderRadius:BorderRadius.circular(20)
-                         
-                         ),
-                         color: Color.fromRGBO(248,220,4,1),
-                         ),
-                       ),
-                        //removed the text no not a problem
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: FlatButton(onPressed: (){
-                            _login_bottomsheet(context, 2);
-                          }, child: Text("REGISTER",style: TextStyle(color:Colors.black),),shape:RoundedRectangleBorder(
-                           borderRadius:BorderRadius.circular(20)
-                           
-                       ),
-                       color: Color.fromRGBO(248,220,4,1),
-                       ),
-                        ),
-
-                      ],),
-                   ),
-                 )
-                
-              )
-            )
-        ],),
-      ), 
-      
-      )
-      
-      
-    );
-    }
-      
-/*if(decsion==1)
-{
-  return Scaffold(
-      backgroundColor:Color.fromRGBO(r, g, b, 1),
-      body:DecoratedBox(
-        position: DecorationPosition.background,
-        
-        decoration: BoxDecoration(
-
-          image: DecorationImage(image: AssetImage('images/fitness.png'),
-          fit: BoxFit.fill
-          )
-
-        
-      ),
-
-      child:
-          Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            
-            Card(
-              color:Color.fromRGBO(r, g, b, 1),
-              child:Container(
-                width: MediaQuery.of(context).size.width-(5*MediaQuery.of(context).size.width/100),
-                height: MediaQuery.of(context).size.height-(60*MediaQuery.of(context).size.height/100),
-              
-                  
-                 child: Container(
-                   width: MediaQuery.of(context).size.width-(5*MediaQuery.of(context).size.width/100),
-                height: MediaQuery.of(context).size.height-(60*MediaQuery.of(context).size.height/100),
-                   child: Card(
-                     color: Color.fromRGBO(39, 47, 55, 1),
-                                        child: Column(
-                       mainAxisAlignment: MainAxisAlignment.start,
-                       crossAxisAlignment: CrossAxisAlignment.center,
-                       children: <Widget>[
-                                   //text username/email
-                                   Padding(
-                                     padding: const EdgeInsets.all(8.0),
-                                     child: Text("UserName/Email",style: TextStyle(color:Colors.white),),
-                                   ),
-                                   Padding(
-                                     padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                                     child: TextField(cursorWidth: 3.0,cursorColor: Color.fromRGBO(r, g, b, 1),
-                                     style: TextStyle(color: Colors.orange),
-                                     
-                                     ),
-                                   ),
-                                   Padding(
-                                     padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
-                                     child: Text("PassWord",style: TextStyle(color:Colors.white),),
-                                   ),
-                                   Padding(
-                                     padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                                     child: TextField(cursorWidth: 3.0,cursorColor: Color.fromRGBO(r, g, b, 1),
-                                     style: TextStyle(color: Colors.orange),
-                                     ),
-                                   ),
-                                   Padding(
-                                     padding: const EdgeInsets.all(8.0),
-                                     child: FlatButton(onPressed: (){
-                                       _login_verified();
-                                       }, child: Text("LOGIN"),shape:RoundedRectangleBorder(
-                                       borderRadius:BorderRadius.circular(20)
-                                       ),
-                                       color: Colors.orange,
-                                       ),
-                                   ),
-
-                      
-                      ],),
-                   ),
-                 )
-                
-              )
-            )
-        ],),
-      ), 
-      
-      )
-      
-      
-    );
-
-}*/
-/*if(decsion==3)
-{
-return Scaffold(
-      backgroundColor:Color.fromRGBO(r, g, b, 1),
-      body:DecoratedBox(
-        position: DecorationPosition.background,
-        
-        decoration: BoxDecoration(
-
-          image: DecorationImage(image: AssetImage('images/fitness.png'),
-          fit: BoxFit.fill
-          )
-
-        
-      ),
-
-      child:
-          Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            
-            Card(
-              color:Color.fromRGBO(r, g, b, 1),
-              child:Container(
-                width: MediaQuery.of(context).size.width-(5*MediaQuery.of(context).size.width/100),
-                height: MediaQuery.of(context).size.height-(60*MediaQuery.of(context).size.height/100),
-              
-                  
-                 child: Container(
-                   width: MediaQuery.of(context).size.width-(5*MediaQuery.of(context).size.width/100),
-                height: MediaQuery.of(context).size.height-(60*MediaQuery.of(context).size.height/100),
-                   child: Card(
-                     color: Color.fromRGBO(39, 47, 55, 1),
-                                        child: Column(
-                       mainAxisAlignment: MainAxisAlignment.start,
-                       crossAxisAlignment: CrossAxisAlignment.center,
-                       children: <Widget>[
-                                   //text username/email
-                                   Padding(
-                                     padding: const EdgeInsets.all(8.0),
-                                     child: Text("UserName/Email",style: TextStyle(color:Colors.white),),
-                                   ),
-                                   Padding(
-                                     padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                                     child: TextField(cursorWidth: 3.0,cursorColor: Color.fromRGBO(r, g, b, 1),
-                                     style: TextStyle(color: Colors.orange),
-                                     
-                                     ),
-                                   ),
-                                   Padding(
-                                     padding: const EdgeInsets.fromLTRB(15, 10, 15, 0),
-                                     child: Text("PassWord",style: TextStyle(color:Colors.white),),
-                                   ),
-                                   Padding(
-                                     padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                                     child: TextField(cursorWidth: 3.0,cursorColor: Color.fromRGBO(r, g, b, 1),
-                                     style: TextStyle(color: Colors.orange),
-                                     ),
-                                   ),
-                                   Padding(
-                                     padding: const EdgeInsets.all(8.0),
-                                     child: FlatButton(onPressed: (){
-                                       _login_verified();
-                                       }, child: Text("LOGIN"),shape:RoundedRectangleBorder(
-                                       borderRadius:BorderRadius.circular(20)
-                                       ),
-                                       color: Colors.orange,
-                                       ),
-                                   ),
-
-                      
-                      ],),
-                   ),
-                 )
-                
-              )
-            )
-        ],),
-      ), 
-      
-      )
-      
-      
-    );
-}     */
-}
-void _login_bottomsheet(context,int seperator)
+/*void _login_bottomsheet(context,int seperator)
   {
     showModalBottomSheet(context: context, 
     shape: RoundedRectangleBorder(borderRadius:BorderRadius.only(topLeft:Radius.circular(30),topRight:Radius.circular(30))),
@@ -613,16 +324,27 @@ void _login_bottomsheet(context,int seperator)
                 ),
               ),
                                Padding(
-                                     padding: const EdgeInsets.all(8.0),
-                                     child: FlatButton(onPressed: (){
-                                       
-                                       createRecord();
-                                       }, child: Text("REGISTER"),shape:RoundedRectangleBorder(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: FlatButton(onPressed: (){
+                                       Future<void>done=createRecord();
+                                       done.then((v)
+                                       {
+                                         if(errorMessage==null)
+                                         {
+                                           print("All ok");
+                                         }else{
+                                           print(errorMessage);
+                                           _showerrormessage(context);
+                                         }
+                                       });
+                                       //Navigator.of(context).pop("/");
+                                       }, 
+                                       child: Text("REGISTER"),shape:RoundedRectangleBorder(
                                        borderRadius:BorderRadius.circular(20)
                                        ),
                                        color: Color.fromRGBO(248,220,4,1),
                                        ),
-                                   ),
+                                       ),
             ]
           )
           )
@@ -633,5 +355,122 @@ void _login_bottomsheet(context,int seperator)
       
 
     });
-  }
+  }*/
+
+
+
+
+
+
+
+
+void _showerrormessage(BuildContext context)
+{
+  final scafbar=Scaffold.of(context);
+  scafbar.showSnackBar(SnackBar(
+    content: Text(errorMessage),
+    backgroundColor: Colors.white,
+    duration: Duration(seconds:5),
+    action: SnackBarAction(label: 'OK', onPressed: scafbar.hideCurrentSnackBar),
+  ));
 }
+
+
+
+
+ 
+
+
+  @override
+  Widget build(BuildContext context) {
+      
+        return Scaffold(
+      backgroundColor:Color.fromRGBO(39, 47, 55,1),
+      body:DecoratedBox(
+        position: DecorationPosition.background,
+        
+        decoration: BoxDecoration(
+
+          image: DecorationImage(image: AssetImage('images/fistness.png'),
+          fit: BoxFit.fill
+          )
+
+        
+      ),
+
+      child:
+      Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            
+            Card(
+              elevation: 10,
+              shape: CircleBorder(
+              ),
+              color:Color.fromRGBO(r, g, b, 1),
+              child:Container(
+                width: MediaQuery.of(context).size.width+(5*MediaQuery.of(context).size.width/100),
+                height: MediaQuery.of(context).size.height-(70*MediaQuery.of(context).size.height/100),
+              
+                  
+                 child: Container(
+                   width: MediaQuery.of(context).size.width-(5*MediaQuery.of(context).size.width/100),
+                height: MediaQuery.of(context).size.height-(70*MediaQuery.of(context).size.height/100),
+                   child: Card(
+                     shape: CircleBorder(),
+                     color: Color.fromRGBO(39, 47, 55, 1),
+                                        child: Column(
+                       mainAxisAlignment: MainAxisAlignment.center,
+                       crossAxisAlignment: CrossAxisAlignment.center,
+                       children: <Widget>[
+                         //removed the text "already user"
+                       Padding(
+                         padding: const EdgeInsets.all(8.0),
+                         child: Container(
+                           color: Color.fromRGBO(39, 47, 55, 1),
+                           child: Loginbutton())
+                       ),
+                        //removed the text no not a problem
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                           color: Color.fromRGBO(39, 47, 55, 1),
+                           child: Registerbutton())
+                        ),
+
+                      ],),
+                   ),
+                 )
+                
+              )
+            )
+        ],),
+      ), 
+      
+      )
+      
+      
+    );
+   
+      
+  }
+
+
+/*_buildBuyTicketButton() {
+    return Container(
+      alignment: Alignment.bottomCenter,
+      margin: EdgeInsets.all(8),
+      child: BuyButton(),
+    );
+  }
+}*/
+
+
+
+}
+
+
