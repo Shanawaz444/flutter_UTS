@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'loginui.dart';
 class Loginbutton extends StatefulWidget {
@@ -73,7 +74,7 @@ class _LoginbuttonState extends State<Loginbutton> with TickerProviderStateMixin
           ) {
             return Container(
               decoration: BoxDecoration(
-                color: Color.fromRGBO(39, 47, 55, 1),
+                color: Color.fromRGBO(248,220,4,1),
                 shape: BoxShape.circle,
               ),
             );
@@ -87,6 +88,10 @@ class _LoginbuttonState extends State<Loginbutton> with TickerProviderStateMixin
             padding: EdgeInsets.symmetric(vertical: 10),
             child: Text(
               _buttonText,
+              style: GoogleFonts.pTSans(
+                                              
+                                              fontSize: 15
+                                            ),
               textAlign: TextAlign.center,
              // style: kStyle,
             ),
