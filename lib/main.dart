@@ -391,7 +391,7 @@ void _showerrormessage(BuildContext context)
         
         decoration: BoxDecoration(
 
-          image: DecorationImage(image: AssetImage('images/fistness.png'),
+          image: DecorationImage(image: AssetImage('images/bkgrnd.png'),
           fit: BoxFit.fill
           )
 
