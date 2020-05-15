@@ -1,0 +1,83 @@
+if(decsion==2)
+{
+return Scaffold(
+      backgroundColor:Color.fromRGBO(39, 47, 55,1),
+      body:DecoratedBox(
+        position: DecorationPosition.background,
+        
+        decoration: BoxDecoration(
+
+          image: DecorationImage(image: AssetImage('images/faitness.png'),
+          fit: BoxFit.fill
+          )
+
+        
+      ),
+
+      child:
+          
+      
+      )
+      
+      
+    );
+}  
+Future<void>createRecord()async
+{
+  errorMessage=null;
+  
+ final _regesterfirebase=FirebaseDatabase.instance.reference();
+ final FirebaseAuth _auth = FirebaseAuth.instance;
+ 
+ await _regesterfirebase.child("users/userdetails/"+_regusername.text+"/").once().then((DataSnapshot snapshot) async{
+    if(snapshot.value==null)
+    {
+      try {
+    AuthResult _res=await _auth.createUserWithEmailAndPassword(
+    email: _regemail.text, 
+    password: _regpassword.text
+  );
+ await _regesterfirebase.child("users/userdetails/"+_regusername.text+"/deatils").set({
+    "UserName":_regusername.text,
+    "Email":_regemail.text,
+    "Password":_regpassword.text,
+    "PhoneNumber":_regphonenumber.text
+  });
+  }catch(e){
+    print(e);
+   setState(() {
+      errorMessage="either email is already taken or wrong,please check weather your password has atleast 6 characters!";
+   });
+  }
+  }else{
+    print(snapshot.value);
+    errorMessage="username is already taken";
+  }
+  });
+
+ 
+
+ /*_regesterfirebase.child("users/userdetails/"+_regusername.text+"/details").once().then((DataSnapshot snp){
+  if(snp!=null)
+   {
+   _regesterfirebase.child("users/userdetails/"+_regusername.text+"/details").once().then((DataSnapshot snp1){
+   if(snp1!=null)
+   {
+     _regesterfirebase.child("users/userdetails/"+_regusername.text+"/details").once().then((DataSnapshot snp1){
+   if(snp1!=null)
+   {
+     
+   }
+
+   });
+   }
+
+  });
+}
+
+
+
+});*/
+
+    
+}

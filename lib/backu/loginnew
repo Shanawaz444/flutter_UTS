@@ -1,0 +1,27 @@
+if(decsion==1)
+{
+  return Scaffold(
+      backgroundColor:Color.fromRGBO(r, g, b, 1),
+      body:DecoratedBox(
+        position: DecorationPosition.background,
+        
+        decoration: BoxDecoration(
+
+          image: DecorationImage(image: AssetImage('images/fitness.png'),
+          fit: BoxFit.fill
+          )
+
+        
+      ),
+
+      child:
+          
+      
+      )
+      
+      
+    );
+
+}
+   
+}
