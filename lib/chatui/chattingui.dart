@@ -24,13 +24,14 @@ class Chattingui extends StatelessWidget {
      try{await _regesterfirebase.child("users/userdetails/"+_currentusername.toString()+"/chat/"+name.toString()+"/"+a.toString()).set({
        "0":msg.text,
        "1": _currentusername.toString(),
-       
+       "2":DateTime.now().toString().substring(0,16)
      });}catch(e){
        print(e);
      }
      await _regesterfirebase.child("users/userdetails/"+name.toString()+"/chat/"+_currentusername.toString()+"/"+b.toString()).set({
        "0":msg.text,
        "1":_currentusername.toString(),
+       "2":DateTime.now().toString().substring(0,16)
      });
       Timer(Duration(milliseconds: 1000), () => _scrollController.jumpTo(_scrollController.position.maxScrollExtent));
   }
@@ -84,15 +85,15 @@ class Chattingui extends StatelessWidget {
                              Timer(Duration(milliseconds: 1000), () => _scrollController.jumpTo(_scrollController.position.maxScrollExtent));
                                _chat.clear();
                                lengthof_chat=0;
-                               print(snap.data.snapshot.value.toString());
+                             //  print(snap.data.snapshot.value.toString());
                                var v=snap.data.snapshot.value;
                            
                                try{_chat.addAll(v);
-                               print(_chat[0][1]);
+                               //print(_chat[0][1]);
                                }catch(b){print(b);}
-                               print(_chat.length);
+                               //print(_chat.length);
                                lengthof_chat=_chat.length;
-                               print(lengthof_chat);
+                               //print(lengthof_chat);
                            if(_chat.length>0)
                            {
                                print("greater");
@@ -102,9 +103,9 @@ class Chattingui extends StatelessWidget {
                                      children: _chat.map((e){
                                        if(e[1].toString()==_currentusername.toString())
                                        {
-                                         return LeftChatRectBubble(e[0].toString());
+                                         return LeftChatRectBubble(e[0].toString(),e[2].toString());
                                        }else{
-                                         return ReftChatRectBubble(e[0].toString());
+                                         return ReftChatRectBubble(e[0].toString(),e[2].toString());
                                        }
                                        
                                      }).toList(),
@@ -153,14 +154,21 @@ class Chattingui extends StatelessWidget {
                    Expanded(child: TextFormField(
                      
                                     controller: msg,
+                                    style: TextStyle(color:Colors.white),
 
                                   )),
                     IconButton(
+                      highlightColor: Colors.white,
+                      hoverColor: Colors.white,
                         icon: Icon(Icons.send
                      ),
                      iconSize: 25.0,
                      color: Color.fromRGBO(248,220,4,1),
-                     onPressed: (){onmessagesend();FocusScope.of(context).unfocus();},
+                     onPressed: (){
+                       if(msg.text.length>0)
+                       {onmessagesend();
+                       msg.clear();
+                       FocusScope.of(context).unfocus();}},
                    ),
                  ],
                ),
