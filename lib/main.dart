@@ -1,11 +1,9 @@
+import 'package:fire/mainhomepage.dart';
 import 'package:fire/registeranimation.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'dart:async';
 
 import 'login_animation.dart';
-import 'loginui.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() => runApp(MyApp());
 
@@ -29,27 +27,8 @@ class _InheritingBeginState extends State<InheritingBegin> with SingleTickerProv
   
   
   static int decsion=0;
-  TextEditingController _usernameLogin,_passwordLogin,_regusername,_regemail,_regpassword,_regphonenumber;
- /* void _login()
-  {
-    setState(() {
-      decsion=1;
-    });
-  }
-  void _login_verified()
-  {
-    setState(() {
-      decsion=0;
-    });
-  }
-  void _regester()
-  {
-
-  }
-  void _regester_verified()
-  {
-
-  }*/
+ 
+  
 
   AnimationController animController1;
 
@@ -60,13 +39,8 @@ class _InheritingBeginState extends State<InheritingBegin> with SingleTickerProv
 String errorMessage;
 void initState() {
   super.initState();
+ _con();
   errorMessage=null;
-  _usernameLogin=TextEditingController();
-  _passwordLogin=TextEditingController();
-  _regpassword=TextEditingController();
-  _regemail=TextEditingController();
-  _regusername=TextEditingController();
-  _regphonenumber=TextEditingController();
   animController1 = AnimationController(
     duration: Duration(seconds: 2),
     vsync: this,
@@ -141,6 +115,15 @@ void initState() {
     
   animController1.forward();
 }
+
+
+
+
+
+
+
+
+
   @override
   void dispose() {
     animController1.reset();
@@ -148,214 +131,18 @@ void initState() {
     super.dispose();
   }
  
-void _checkingLoginDetails()
-{
-  //final DocumentReference _firestroedoc=Firestore.instance.document()
-}
-
-
-
-
-/*void _login_bottomsheet(context,int seperator)
+ Future<void>_con()async
+ {
+ SharedPreferences _inst = await SharedPreferences.getInstance();
+  if(_inst.containsKey("username")==true)
   {
-    showModalBottomSheet(context: context, 
-    shape: RoundedRectangleBorder(borderRadius:BorderRadius.only(topLeft:Radius.circular(30),topRight:Radius.circular(30))),
-    elevation: 10,
-    backgroundColor: Color.fromRGBO(39, 47, 55, 1),
-    builder: (BuildContext c){
-       if(seperator==1)
-       {
-          return Container(
-        height: MediaQuery.of(context).size.height-(50*MediaQuery.of(context).size.height/100),
-        width: MediaQuery.of(context).size.width,
-       
-        
-          child:
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-
-            children:<Widget>[
-                                  
-                                   Padding(
-                                     padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-                                     child: TextFormField(
-                                       controller: _usernameLogin,
-                                       validator: (somevalue){
-                                     if(somevalue.isEmpty)
-                                       {
-                                     return'Cannot leave empty!';
-                                      }
-                                       return null;
-                                        },
-                                       decoration: InputDecoration(
-                                         hintText:"Enter valid Username or Email..",
-                                          border: const OutlineInputBorder()
-                                       ),
-                                       cursorWidth: 3.0,cursorColor: Color.fromRGBO(r, g, b, 1),
-                                     style: TextStyle(color: Colors.orange),
-                                     
-                                     ),
-                                   ),
-                                   
-                                   Padding(
-                                     padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
-                                     child: TextFormField(
-                                       controller: _passwordLogin,
-                                       validator: (somevalue){
-                                     if(somevalue.isEmpty)
-                                         {
-                                         return'Cannot leave empty!';
-                                           }
-                                         return null;
-                                              },
-                                       
-                                       decoration: InputDecoration(
-                                         hintText:"Enter valid Password..",
-                                          border: const OutlineInputBorder()),
-                                       cursorWidth: 3.0,cursorColor: Color.fromRGBO(r, g, b, 1),
-                                     style: TextStyle(color: Colors.orange),
-                                     
-                                     ),
-                                   ), 
-                                   Padding(
-                                     padding: const EdgeInsets.all(8.0),
-                                     child: FlatButton(onPressed: (){
-                                       
-
-
-
-
-
-                                       }, child: Text("LOGIN"),shape:RoundedRectangleBorder(
-                                       borderRadius:BorderRadius.circular(20)
-                                       ),
-                                       color: Color.fromRGBO(248,220,4,1),
-                                       ),
-                                   ),
-             
-             
-
-            ]
-          )
-        
-      );
-       }else{
-         return Container(
-        //height: MediaQuery.of(context).size.height-(50*MediaQuery.of(context).size.height/100),
-        //width: MediaQuery.of(context).size.width,
-       
-        
-          child:
-          SingleChildScrollView(
-            child:Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-
-            children:<Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text("REGISTER",style: TextStyle(color:Colors.white),),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  controller: _regusername,
-                  validator: (somevalue){
-                    if(somevalue.isEmpty)
-                    {
-                      return'Cannot leave empty!';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    hintText:"Enter valid Email..",
-                    border: const OutlineInputBorder()
-                  ),
-                ),
-              ),
-               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  controller: _regemail,
-                  validator: (somevalue){
-                    if(somevalue.isEmpty)
-                    {
-                      return'Cannot leave empty!';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    hintText:"Enter unique UserName..",
-                    border: const OutlineInputBorder()
-                  ),
-                ),
-              ),
-               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  controller: _regpassword,
-                  validator: (somevalue){
-                    if(somevalue.isEmpty)
-                    {
-                      return'Cannot leave empty!';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    hintText:"Enter valid Password..",
-                    border: const OutlineInputBorder()
-                  ),
-                ),
-              ),
-               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextFormField(
-                  controller: _regphonenumber,
-                  validator: (somevalue){
-                    if(somevalue.isEmpty)
-                    {
-                      return'Cannot leave empty!';
-                    }
-                    return null;
-                  },
-                  decoration: InputDecoration(
-                    hintText:"Enter valid Ph.number..",
-                    border: const OutlineInputBorder()
-                  ),
-                ),
-              ),
-                               Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: FlatButton(onPressed: (){
-                                       Future<void>done=createRecord();
-                                       done.then((v)
-                                       {
-                                         if(errorMessage==null)
-                                         {
-                                           print("All ok");
-                                         }else{
-                                           print(errorMessage);
-                                           _showerrormessage(context);
-                                         }
-                                       });
-                                       //Navigator.of(context).pop("/");
-                                       }, 
-                                       child: Text("REGISTER"),shape:RoundedRectangleBorder(
-                                       borderRadius:BorderRadius.circular(20)
-                                       ),
-                                       color: Color.fromRGBO(248,220,4,1),
-                                       ),
-                                       ),
-            ]
-          )
-          )
-        
-      );
-
-       }
-      
-
-    });
-  }*/
+     Navigator.pushAndRemoveUntil(
+                                                    context,
+                                                     MaterialPageRoute(builder: (context) => HomePage(_inst.get("username").toString())),
+                                                    (Route<dynamic> route) => false,
+                                                   );
+  }
+ }
 
 
 
@@ -364,16 +151,11 @@ void _checkingLoginDetails()
 
 
 
-void _showerrormessage(BuildContext context)
-{
-  final scafbar=Scaffold.of(context);
-  scafbar.showSnackBar(SnackBar(
-    content: Text(errorMessage),
-    backgroundColor: Colors.white,
-    duration: Duration(seconds:5),
-    action: SnackBarAction(label: 'OK', onPressed: scafbar.hideCurrentSnackBar),
-  ));
-}
+
+
+
+
+
 
 
 
