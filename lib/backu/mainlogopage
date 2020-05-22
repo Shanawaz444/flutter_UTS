@@ -1,0 +1,314 @@
+SingleChildScrollView(
+            
+          child:Column(
+            //mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child:
+                   Card(
+                     color:Color.fromRGBO(39, 47, 55,1) ,
+                     child: Padding(
+                       padding: const EdgeInsets.fromLTRB(20, 0, 20, 5),
+                       child: TextFormField(
+                         controller: _searchGame,
+                         decoration: InputDecoration(
+                           labelText:"Search",
+                           labelStyle:TextStyle(color:Color.fromRGBO(248,220,4,1),)
+                         ),
+                         style:TextStyle(color: Colors.white)
+                       ),
+                     ),
+                   )
+                ),
+              ),
+
+              Row(children: <Widget>[
+                 
+               Padding(
+                 padding: const EdgeInsets.fromLTRB(10, 20, 0, 10),
+                 child: Center(
+                  child: Text("MOBILE",
+                  style: GoogleFonts.pTSans(
+                    fontSize:30,
+                    fontWeight: FontWeight.w600
+                  ),
+                  )
+                 ),
+               ),
+               Icon(MaterialIcons.phone_android)
+
+              ],),
+
+               
+               Container(
+                    //height: MediaQuery.of(context).size.height/1.0,
+                    child: CarouselSlider(
+                         
+                 items:widget._mobilecount.map((i) {
+                          return Builder(
+                     builder: (BuildContext context) {
+                        return GestureDetector(
+                            onTap: (){
+                              print(i);
+                              Navigator.of(context).push(_createroute(widget._mobileimages[i],widget._mobile[i].toString(),widget._username.toString()));
+                             
+                            },
+                                    child: Container(
+                              
+                                    child:Wrap(
+                                    children:<Widget>[
+                                         Padding(
+                 padding: const EdgeInsets.all(8.0),
+                 child: Center(
+                   child: Text(widget._mobile[i].toString(),
+                   style: GoogleFonts.pTSans(
+                      fontSize:20,
+                      fontWeight: FontWeight.w400
+                    ),
+                   ),
+                 ),
+               ),
+                                        Hero(
+                                          tag:"hero1",
+                                          child: widget._mobileimages[i],
+                                          )
+                                      ]
+                                    )
+                                 
+                            ),
+                          );
+                     
+                     
+                },
+             );
+                }).toList(),
+                //a list to the builder
+                
+                options: CarouselOptions(
+                   // autoPlay:true,
+                    autoPlayInterval:Duration(seconds:Random(6).nextInt(10)),
+                    autoPlayCurve: Curves.easeInCirc,
+                 // height: MediaQuery.of(context).size.height/3,
+                    viewportFraction: 1.0
+                ),
+             ),
+                  ),
+            
+
+           /*Center(child: FlatButton(onPressed:(){hfhfh();}, child: Text("sasasas")))*/
+
+             Padding(
+               padding: const EdgeInsets.only(top:20),
+               child: Divider(),
+             ),
+             
+
+
+             Row(children: <Widget>[
+               
+            Padding(
+              padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+              child: Center(child: Text("Windows/Pc",
+              style: GoogleFonts.pTSans(
+                    fontSize:30,
+                    fontWeight: FontWeight.w600
+                  ),
+              ),
+              
+              ),
+            ),
+            Icon(Icons.computer)
+             ],),
+
+
+
+
+              Container(
+                    //height: MediaQuery.of(context).size.height/1.0,
+                    child: CarouselSlider(
+                         
+                 items: widget._pccount.map((i) {
+                          return Builder(
+                     builder: (BuildContext context) {
+                        return GestureDetector(
+                            onTap: (){
+                              print(i);
+                              Navigator.of(context).push(_createroute(widget._pcimages[i],widget._pc[i].toString(),widget._username.toString()));
+                             
+                            },
+                                    child: Container(
+                              
+                                    child:Wrap(
+                                    children:<Widget>[
+                                         Padding(
+                 padding: const EdgeInsets.all(8.0),
+                 child: Center(
+                   child: Text(widget._pc[i].toString(),
+                   style: GoogleFonts.pTSans(
+                      fontSize:20,
+                      fontWeight: FontWeight.w400
+                    ),
+                   ),
+                 ),
+               ),
+                                        Hero(
+                                          tag:"slideimagebgn",
+                                          child: widget._pcimages[i],
+                                          )
+                                      ]
+                                    )
+                                 
+                            ),
+                          );
+                     
+                     
+                },
+             );
+                }).toList(),
+                //a list to the builder
+                
+                options: CarouselOptions(
+                   // autoPlay:true,
+                    autoPlayInterval:Duration(seconds:Random(6).nextInt(10)),
+                    autoPlayCurve: Curves.easeInCirc,
+                 // height: MediaQuery.of(context).size.height/3,
+                    viewportFraction: 1.0
+                ),
+             ),
+                  ),
+
+
+
+
+
+
+
+               
+                 FlatButton(color: Colors.black,onPressed: (){setState(() {
+                   
+                 });}, child:Text("dsdsdsd")),
+              Row(children: <Widget>[
+                 
+               Padding(
+                 padding: const EdgeInsets.fromLTRB(10, 20, 0, 10),
+                 child: Center(
+                  child: Text("Xbox:One",
+                  style: GoogleFonts.pTSans(
+                    fontSize:30,
+                    fontWeight: FontWeight.w600
+                  ),
+                  )
+                 ),
+               ),
+               Icon(MaterialIcons.gamepad)
+
+              ],),
+              
+
+
+                           Container(
+                    //height: MediaQuery.of(context).size.height/1.0,
+                    child: CarouselSlider(
+                         
+                 items: widget._xboxcount.map((i) {
+                          return Builder(
+                     builder: (BuildContext context) {
+                        return GestureDetector(
+                            onTap: (){
+                              print(i);
+                              Navigator.of(context).push(_createroute(widget._xboximages[i],widget._xbox[i].toString(),widget._username.toString()));
+                             
+                            },
+                                    child: Container(
+                              
+                                    child:Wrap(
+                                    children:<Widget>[
+                                         Padding(
+                 padding: const EdgeInsets.all(8.0),
+                 child: Center(
+                   child: Text(widget._xbox[i].toString(),
+                   style: GoogleFonts.pTSans(
+                      fontSize:20,
+                      fontWeight: FontWeight.w400
+                    ),
+                   ),
+                 ),
+               ),
+                                        Hero(
+                                          tag:"hero3",
+                                          child: widget._xboximages[i],
+                                          )
+                                      ]
+                                    )
+                                 
+                            ),
+                          );
+                     
+                     
+                },
+             );
+                }).toList(),
+                //a list to the builder
+                
+                options: CarouselOptions(
+                   // autoPlay:true,
+                    autoPlayInterval:Duration(seconds:Random(6).nextInt(10)),
+                    autoPlayCurve: Curves.easeInCirc,
+                 // height: MediaQuery.of(context).size.height/3,
+                    viewportFraction: 1.0
+                ),
+             ),
+                  ),
+
+
+
+
+
+
+               
+
+          /* Card(
+                 color: Color.fromRGBO(248,220,4,1),
+                 child:Column(
+                   children:<Widget>[
+                     Padding(
+                 padding: const EdgeInsets.all(8.0),
+                 child: Text("PUBG(player unknown battlegrounds)"),
+               ),
+
+                CarouselSlider(
+                     
+                 items: [1,2,3,4,5].map((i) {
+                      return Builder(
+                   builder: (BuildContext context) {
+                    return Container(
+                     width: MediaQuery.of(context).size.width,
+                     margin: EdgeInsets.symmetric(horizontal: 5.0),
+                      decoration: BoxDecoration(
+                       color: Colors.amber
+                  ),
+             child: Image.asset("images/bkgrnd.png",fit: BoxFit.cover,)
+                   );
+                },
+             );
+                }).toList(),
+                //a list to the builder
+                
+                options: CarouselOptions(
+                  autoPlay:true,
+                  autoPlayInterval:Duration(seconds:3),
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                ),
+             ),
+                   ]
+                 )
+               ),*/
+
+
+
+          ],
+          )
+                 ),
