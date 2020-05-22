@@ -1,28 +1,31 @@
 import 'dart:math';
-
-import 'package:fire/gamediscription.dart';
+import 'dart:typed_data';
 import 'package:fire/gamename.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 class Dummy extends StatelessWidget {
- final Image temp;
+ final Uint8List temp;
  final String _nameofgame;
  final String _currentusername;
  Dummy(this.temp,this._nameofgame,this._currentusername);
 
+final List<Image>imgs=[];
 
-
- Future<Widget>_load(String s,int i)async
+ Future<List<Image>>_load()async
   {
   // print(s);
   // print("$s/"+i.toString()+".jpg");
+    for(int i=1;i<=4;i++)
+    {
     Image m;
     await FirebaseStorage.instance.ref().child("$_nameofgame/"+i.toString()+".jpg").getDownloadURL().then((ov){
       m=Image.network(ov.toString(),fit:BoxFit.fitHeight);
-      
+      imgs.add(m); 
+      //print("done");
     });
-    return m;
+    }
+    return imgs;
   }
 
 
@@ -30,21 +33,13 @@ class Dummy extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Scaffold(
       backgroundColor: Color.fromRGBO(248,220,4,1),
-      body:SingleChildScrollView(
-              child: Column(
+      body:
+              Column(
           children: <Widget>[
             Stack(
           children: <Widget>[
-            
-            Container(
-              child:CarouselSlider(
-                           
-                   items: [1,2,3,4].map((i) {
-                            return Builder(
-                       builder: (BuildContext context) {
-                          return 
-                        FutureBuilder(
-                           future: _load(i.toString(),i),
+            FutureBuilder(
+                           future: _load(),
                            builder: (context,snapshot){
                              if(snapshot.connectionState==ConnectionState.waiting)
                              {
@@ -54,12 +49,16 @@ class Dummy extends StatelessWidget {
                                );
                              }
                             return Container(
+              child:CarouselSlider(
+                           
+                   items: imgs.map((i) {
+                            return Builder(
+                       builder: (BuildContext context) {
+                          return Container(
                               width: MediaQuery.of(context).size.width,
-                              child:snapshot.data
+                              child:i
                             );
-                       }
-                       
-                       );
+                        
                        
                   },
                );
@@ -67,14 +66,18 @@ class Dummy extends StatelessWidget {
                   //a list to the builder
                   
                   options: CarouselOptions(
-                      //autoPlay:true,
+                      autoPlay:true,
                       autoPlayInterval:Duration(seconds:Random(6).nextInt(10)),
                       autoPlayCurve: Curves.easeInCirc,
                    // height: MediaQuery.of(context).size.height/3,
                       viewportFraction: 1.0
                   ),
                ), 
-            ),
+            );
+                       }
+                       
+                       ),
+            
 
 
 
@@ -93,7 +96,7 @@ class Dummy extends StatelessWidget {
                   height: MediaQuery.of(context).size.height/4.5,
                   
                     //color: Colors.white ,
-                    child: temp,
+                    child: Image.memory(temp,fit: BoxFit.fitHeight,),
                  
                 )
               
@@ -117,20 +120,24 @@ class Dummy extends StatelessWidget {
             child: GameName(_nameofgame.toString().toUpperCase()),
           )
           ),
-          Padding(
-            padding: const EdgeInsets.only(top:30),
-            child: FutureBuilder(
-              future: null,
-              builder: (context,snap){
-              return GameDiscreption(_currentusername.toString());
-            }
-            
-            ),
-          )
+         Expanded(
+                    child: Container(
+                decoration: BoxDecoration(
+                  color: Color.fromRGBO(39, 47, 55,1),
+                  borderRadius: BorderRadius.only(
+                    topLeft:Radius.circular(30.0),
+                    topRight: Radius.circular(30.0),
+                  )
+                
+                ),
+                
+                child: Text("Adad0fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"),
+              ),
+         ),
 
           ],
         ),
-      )
+      
     );
     
   }
