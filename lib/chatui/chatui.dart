@@ -52,22 +52,24 @@ class _ChatuiState extends State<Chatui> {
               child: ListView(
                                children:_friendrequests.map((e)
                                {
-                                return GestureDetector(
-                                  onTap: (){
-                                 Navigator.of(context).push(_createroute(e.toString(),widget._username.toString()));
-                                  },
+                                return 
                                 
                                 
-                                  child: Padding(padding: EdgeInsets.all(8.0),
+                                   Padding(padding: EdgeInsets.all(8.0),
                                    
                                     
-                                      child: ChatTabs(e.toString())
+                                     child: Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    child: ChatTabs(e.toString(),widget._username)),
+                                      
+                                      
+                                      
                                      
                                       
 
-                                  ),
+                                  );
                                 
-                                );
+                                
                                }).toList()
                              ),
             ),
@@ -88,7 +90,7 @@ class _ChatuiState extends State<Chatui> {
     );
   }
 }
-Route _createroute(String _username,String _currentusername)
+/*Route _createroute(String _username,String _currentusername)
 {
   return PageRouteBuilder(
     pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation)=>Chattingui(_username.toString(),_currentusername.toString()),
@@ -126,7 +128,7 @@ Route _createroute(String _username,String _currentusername)
            );
          }
   );
-}
+}*/
 
 
 
