@@ -122,6 +122,7 @@ final List<Image>imgs=[];
           ),
          Expanded(
                     child: Container(
+                      width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   color: Color.fromRGBO(39, 47, 55,1),
                   borderRadius: BorderRadius.only(
@@ -131,9 +132,20 @@ final List<Image>imgs=[];
                 
                 ),
                 
-                child: Text("Adad0fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"),
-              ),
+                child:StreamBuilder(builder:(context,snap){
+                  return Center(child: Text("Sorry no one is active on \n this Game right now!",style: TextStyle(color:Colors.white),));
+                },
+              ),)
          ),
+         Container(
+           color: Color.fromRGBO(39, 47, 55,1),
+           child: Center(
+             child: FlatButton(
+               color: Color.fromRGBO(248,220,4,1),
+               onPressed: (){}, child: Text("Sorry in build process",style: TextStyle(color:Color.fromRGBO(39, 47, 55,1)))
+               ),
+           ),
+         )
 
           ],
         ),
