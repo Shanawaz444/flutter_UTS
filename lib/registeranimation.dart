@@ -1,5 +1,6 @@
 import 'package:fire/registerui.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'loginui.dart';
 class Registerbutton extends StatefulWidget {
@@ -74,7 +75,7 @@ class _RegisterbuttonState extends State<Registerbutton> with TickerProviderStat
           ) {
             return Container(
               decoration: BoxDecoration(
-                color: Color.fromRGBO(39, 47, 55, 1),
+                color: Color.fromRGBO(248,220,4,1),
                 shape: BoxShape.circle,
               ),
             );
@@ -89,6 +90,11 @@ class _RegisterbuttonState extends State<Registerbutton> with TickerProviderStat
             child: Text(
               _buttonText,
               textAlign: TextAlign.center,
+              style: GoogleFonts.pTSans(
+                                            
+                                              fontSize: 15,
+                                              
+                                            ),
              // style: kStyle,
             ),
           ),
