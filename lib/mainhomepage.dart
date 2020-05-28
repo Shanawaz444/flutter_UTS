@@ -1,83 +1,149 @@
-import 'dart:math';
+import 'dart:async';
+import 'dart:typed_data';
+import 'package:fire/addfriend/addfriend.dart';
 import 'package:fire/chatui/chatui.dart';
 import 'package:fire/dummy.dart';
+import 'package:fire/model/imagesmodel.dart';
 import 'package:fire/notificationsui/notificationiconfunction.dart';
+import 'package:fire/setting/settings.dart';
+import 'package:fire/utils/database_helper.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:fancy_bottom_navigation/fancy_bottom_navigation.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:firebase_database/firebase_database.dart';
+
 
 class HomePage extends StatefulWidget {
   final String _username;
-  const HomePage(this._username);
+ 
+   
+
+
+
+
+
+
+
+
+  const HomePage(this._username,);
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-   static int index;
-  TextEditingController _searchGame;
-  List<dynamic>_list;
-  List<dynamic>_winlist;
-  List<dynamic>_xbox;
+class _HomePageState extends State<HomePage> with WidgetsBindingObserver{
+  static int desision;
+  var controller=new StreamController();
+ Stream _notify;
+  DatabaseHelper _databaseHelper=DatabaseHelper();
+  List<LoadImages>mobilemainui=[];
+  List<LoadImages>pcmainui=[];
+  List<LoadImages>xboxmainui=[];
+  static bool _proceed;
+
   void initState()
   {
   super.initState();
-  _searchGame=new TextEditingController();
-  index=0;
-  print(widget._username);
+  _updateisactive();
+  WidgetsBinding.instance.addObserver(this);
+  _notify=controller.stream;
+  controller.add("event");
+  _proceed=true;
+  desision=0;
+  //print(widget._username);
+  //index=0;
   }
-  Future<List> hfhfh(String s)async
+  Future<void>_updateisactive()async
   {
-     await FirebaseDatabase.instance.reference().child(s).once().then((oo){
-       _list=oo.value;
-   print(oo.value);
- });
- return _list;
+    await FirebaseDatabase.instance.reference().child("users/userdetails/"+widget._username.toString()).update(
+        {
+         "isactive":"active"
+         }
+       );
+       
+    
   }
-  Future<List> hfhffh(String s)async
+ @override
+  void dispose()
   {
-     await FirebaseDatabase.instance.reference().child(s).once().then((oo){
-       _winlist=oo.value;
-  // print(oo.value);
- });
- return _winlist;
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
-  Future<List> _xbob_fun(String s)async
+  void didChangeAppLifecycleState(AppLifecycleState state)
   {
-     await FirebaseDatabase.instance.reference().child(s).once().then((oo){
-       _xbox=oo.value;
-  // print(oo.value);
- });
- return _xbox;
+    super.didChangeAppLifecycleState(state);
+    switch(state)    {
+      case AppLifecycleState.paused:
+          FirebaseDatabase.instance.reference().child("users/userdetails/"+widget._username.toString()+"/isactive").remove();
+         break;
+      case AppLifecycleState.inactive:
+          FirebaseDatabase.instance.reference().child("users/userdetails/"+widget._username.toString()+"/isactive").remove();
+
+          break;
+      case AppLifecycleState.resumed:
+            FirebaseDatabase.instance.reference().child("users/userdetails/"+widget._username.toString()+"/isactive").update({
+              'isactive':'active'
+            });
+          break;
+      case AppLifecycleState.detached:
+          FirebaseDatabase.instance.reference().child("users/userdetails/"+widget._username.toString()+"/isactive").remove();
+
+          break;   
+    }
+
   }
-  Future<List> winimages()async
+
+
+  Future<bool>_settingthedata()async
   {
-     await FirebaseDatabase.instance.reference().child("users/mainmenuimageswindows").once().then((oo){
-       _winlist=oo.value;
-  // print(oo.value);
- });
- return _winlist.toList();
+    if(_proceed==true)
+    {var mobilemainimgs=await _databaseHelper.getLoadImageMapList("mobilemainui");
+    for(int i=0;i<mobilemainimgs.length;i++)
+    {
+      LoadImages _temp;
+      _temp=LoadImages.fromMapObject(mobilemainimgs[i]);
+      mobilemainui.add(_temp);   
+    }
+   // mobilemainimgs.clear();
+    var pcmainimgs=await _databaseHelper.getLoadImageMapList("pcmainui");
+   
+    for(int i=0;i<pcmainimgs.length;i++)
+    {
+      LoadImages _temp;
+      _temp=LoadImages.fromMapObject(pcmainimgs[i]);
+      pcmainui.add(_temp);   
+    }
+   // pcmainimgs.clear();
+    var xboxmainimgs=await _databaseHelper.getLoadImageMapList("xboxmainui");
+    for(int i=0;i<xboxmainimgs.length;i++)
+    {
+      LoadImages _temp;
+      _temp=LoadImages.fromMapObject(xboxmainimgs[i]);
+      xboxmainui.add(_temp);   
+    }}
+    _proceed=false;
+    //xboxmainimgs.clear();
+    return true;
+    
+   
   }
-  Future<Widget>_load(String s,int i)async
-  {
-  // print(s);
-  // print("$s/"+i.toString()+".jpg");
-    Image m;
-    await FirebaseStorage.instance.ref().child("$s/"+i.toString()+".jpg").getDownloadURL().then((ov){
-      m=Image.network(ov.toString(),fit:BoxFit.fitHeight);
-      
-    });
-    return m;
-  }
+
+
+
+
+
+
+
+
+
+
+
+ 
   @override
   Widget build(BuildContext context) {
-       if(index==0)
-       {
+       
          return Scaffold(
       backgroundColor: Color.fromRGBO(248,220,4,1),
       bottomNavigationBar: FancyBottomNavigation(
@@ -85,395 +151,314 @@ class _HomePageState extends State<HomePage> {
         circleColor: Colors.white,
         textColor: Colors.white,
         inactiveIconColor: Colors.white,
-        initialSelection: index,
+        initialSelection: 0,
         activeIconColor: Colors.black,
         //initialSelection: 3,
         tabs: [
           TabData(iconData: MaterialCommunityIcons.home,title: 'Home'),
           TabData(iconData: MaterialCommunityIcons.chat,title: 'Chat'),
-          TabData(iconData: MaterialCommunityIcons.trophy_award, title: 'Progress'),
           TabData(iconData: MaterialCommunityIcons.settings, title: 'Settings'),
           
         ], 
         onTabChangedListener: (d){
-          print(d.toString());
-          setState(() {
-          index=d;
-          });
+         desision=d;
+         controller.add("apashampa");
         }),
+          
+        
 
-
-
-         body: SingleChildScrollView(
-            
-          child:Column(
-            //mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Center(
-                  child:
-                   Card(
-                     color:Color.fromRGBO(39, 47, 55,1) ,
-                     child: Padding(
-                       padding: const EdgeInsets.fromLTRB(20, 0, 20, 5),
-                       child: TextFormField(
-                         controller: _searchGame,
-                         decoration: InputDecoration(
-                           labelText:"Search",
-                           labelStyle:TextStyle(color:Color.fromRGBO(248,220,4,1),)
-                         ),
-                         style:TextStyle(color: Colors.white)
-                       ),
+         body:  StreamBuilder<Object>(
+           stream: _notify,
+           builder: (context, snapshot) {
+             
+             if(desision==0)
+            { return FutureBuilder(
+                   future:_settingthedata() ,
+                   builder: (context,snapsnap){
+                     return SingleChildScrollView(
+                       child:
+                       Column(children: <Widget>[
+                          Row(children: <Widget>[
+                     
+                   Padding(
+                     padding: const EdgeInsets.fromLTRB(10, 20, 0, 10),
+                     child: Center(
+                      child: Text("MOBILE",
+                      style: GoogleFonts.pTSans(
+                        fontSize:30,
+                        fontWeight: FontWeight.w600
+                      ),
+                      )
                      ),
-                   )
-                ),
-              ),
-
-              Row(children: <Widget>[
-                 
-               Padding(
-                 padding: const EdgeInsets.fromLTRB(10, 20, 0, 10),
-                 child: Center(
-                  child: Text("MOBILE",
-                  style: GoogleFonts.pTSans(
-                    fontSize:30,
-                    fontWeight: FontWeight.w600
-                  ),
-                  )
-                 ),
-               ),
-               Icon(MaterialIcons.phone_android)
-
-              ],),
-
-               
-               FutureBuilder(
-                 future:hfhfh("mobilegames"),
-                 builder: (context,snp){
-                   if(snp.connectionState==ConnectionState.waiting)
-                   {
-                     return Center(child:Container(
-                       height: 101,
-                       width: 101,
-                       child: Image.asset("images/loding.gif")));
-                   }
-                     return 
-                       
-                  Container(
-                    //height: MediaQuery.of(context).size.height/1.0,
-                    child: CarouselSlider(
-                         
-                 items: _list.map((i) {
-                          return Builder(
-                     builder: (BuildContext context) {
-                        return 
-                      FutureBuilder(
-                         future: _load(i.toString(),1),
-                         builder: (context,snapshot){
-                           if(snapshot.connectionState==ConnectionState.waiting)
-                           {
-                             return LinearProgressIndicator(
-                               backgroundColor: Colors.transparent,
-                               value: 0.0,
-                             );
-                           }
-                          return GestureDetector(
-                            onTap: (){
-                              print(i);
-                              Navigator.of(context).push(_createroute(snapshot.data,i,widget._username.toString()));
-                             
-                            },
-                                    child: Container(
-                              
-                                    child:Wrap(
-                                    children:<Widget>[
-                                         Padding(
-                 padding: const EdgeInsets.all(8.0),
-                 child: Center(
-                   child: Text(i.toString(),
-                   style: GoogleFonts.pTSans(
-                      fontSize:20,
-                      fontWeight: FontWeight.w400
-                    ),
                    ),
-                 ),
-               ),
+                   Icon(MaterialIcons.phone_android)
+
+                  ],),
+                         Padding(
+                           padding: const EdgeInsets.only(top:10),
+                             
+                               child: Container(
+                               child: CarouselSlider(
+                                 items:mobilemainui.map((e){
+                                  return GestureDetector(
+                                    onTap: (){Navigator.of(context).push(_createroute(e.imggg,e.gametitle.toString(),widget._username.toString()));},
+                                   child: Wrap(
+                                      children: <Widget>[
+                                        Center(
+                                          child: Text(e.gametitle.toString(),
+                                             style: GoogleFonts.pTSans(
+                                                fontSize:20,
+                                                  fontWeight: FontWeight.w800
+                                                        ),
+                                                ),
+                                        ),
                                         Hero(
                                           tag:"hero1",
-                                          child: snapshot.data,
-                                          )
-                                      ]
-                                    )
-                                 
-                            ),
-                          );
-                     }
-                     
-                     );
-                     
-                },
-             );
-                }).toList(),
-                //a list to the builder
-                
-                options: CarouselOptions(
-                   // autoPlay:true,
-                    autoPlayInterval:Duration(seconds:Random(6).nextInt(10)),
-                    autoPlayCurve: Curves.easeInCirc,
-                 // height: MediaQuery.of(context).size.height/3,
-                    viewportFraction: 1.0
-                ),
-             ),
-                  );
-               
-               }),
-            
-
-           /*Center(child: FlatButton(onPressed:(){hfhfh();}, child: Text("sasasas")))*/
-
-             Padding(
-               padding: const EdgeInsets.only(top:20),
-               child: Divider(),
-             ),
-             
-
-
-             Row(children: <Widget>[
-               
-            Padding(
-              padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
-              child: Center(child: Text("Windows/Pc",
-              style: GoogleFonts.pTSans(
-                    fontSize:30,
-                    fontWeight: FontWeight.w600
-                  ),
-              ),
-              
-              ),
-            ),
-            Icon(Icons.computer)
-             ],),
-
-
-
-
-         FutureBuilder(
-                 future:hfhffh("pcgames"),
-                 builder: (context,snp){
-                   if(snp.connectionState==ConnectionState.waiting)
-                   {
-                     return Center(child: CircularProgressIndicator());
-                   }
-                     return 
-                       
-                  Container(
-                    //height: MediaQuery.of(context).size.height/1.0,
-                    child: CarouselSlider(
-                         
-                 items: _winlist.map((i) {
-                          return Builder(
-                     builder: (BuildContext context) {
-                        return 
-                      FutureBuilder(
-                         future: _load(i.toString(),1),
-                         builder: (context,snapshot){
-                           if(snapshot.connectionState==ConnectionState.waiting)
-                           {
-                             return LinearProgressIndicator(
-                               backgroundColor: Colors.transparent,
-                               value: 0.0,
-                             );
-                           }
-                          return GestureDetector(
-                            onTap: (){
-                              print(i);
-                               Navigator.of(context).push(_createroute(snapshot.data,i,widget._username.toString()));
-                            },
-                                    child: Container(
-                              
-                                    child:Wrap(
-                                    children:<Widget>[
-                                         Padding(
-                 padding: const EdgeInsets.all(8.0),
-                 child: Center(
-                   child: Text(i.toString(),
-                   style: GoogleFonts.pTSans(
-                      fontSize:20,
-                      fontWeight: FontWeight.w400
-                    ),
-                   ),
-                 ),
-               ),
-                                       
-                                  Hero(
-                                    tag:"slideimagebgn",
-                                    child: snapshot.data,
+                                            child: Container(
+                                            width: MediaQuery.of(context).size.width/1.01,
+                                             child: Card(
+                                               elevation: 100,
+                                               child: Image.memory(e.imggg,fit: BoxFit.cover,)),
+                                           ),
+                                        ),
+                                      ],
                                     ),
-                                      ]
-                                    )
-                                 
-                            ),
-                          );
-                     }
-                     
-                     );
-                     
-                },
-             );
-                }).toList(),
-                //a list to the builder
-                
-                options: CarouselOptions(
-                    //autoPlay:true,
-                    autoPlayInterval:Duration(seconds:Random(6).nextInt(10)),
-                    autoPlayCurve: Curves.easeInCirc,
-                 // height: MediaQuery.of(context).size.height/3,
-                    viewportFraction: 1.0
-                ),
-             ),
-                  );
-               
-               }),
-               
-                 FlatButton(color: Colors.black,onPressed: (){setState(() {
+                                  );
+                                 }).toList(),
+                                  options: CarouselOptions(
+                                         autoPlay:true,
+                                            autoPlayInterval:Duration(seconds:5),
+                                            autoPlayCurve: Curves.fastOutSlowIn,
+                                            viewportFraction: 1.0
+                                      ),),
+                             ),
+                           
+                         ),
+
+
+                                                 Row(children: <Widget>[
                    
-                 });}, child:Text("dsdsdsd")),
-              Row(children: <Widget>[
-                 
-               Padding(
-                 padding: const EdgeInsets.fromLTRB(10, 20, 0, 10),
-                 child: Center(
-                  child: Text("Xbox:One",
-                  style: GoogleFonts.pTSans(
-                    fontSize:30,
-                    fontWeight: FontWeight.w600
-                  ),
-                  )
-                 ),
-               ),
-               Icon(MaterialIcons.gamepad)
-
-              ],),
-              FutureBuilder(
-                 future:_xbob_fun("xbox"),
-                 builder: (context,snp){
-                   if(snp.connectionState==ConnectionState.waiting)
-                   {
-                     return Center(child: CircularProgressIndicator());
-                   }
-                     return 
-                       
-                  Container(
-                    //height: MediaQuery.of(context).size.height/1.0,
-                    child: CarouselSlider(
-                         
-                 items: _xbox.map((i) {
-                          return Builder(
-                     builder: (BuildContext context) {
-                        return 
-                      FutureBuilder(
-                         future: _load(i.toString(),1),
-                         builder: (context,snapshot){
-                           if(snapshot.connectionState==ConnectionState.waiting)
-                           {
-                             return LinearProgressIndicator(
-                               backgroundColor: Colors.transparent,
-                               value: 0.0,
-                             );
-                           }
-                          return GestureDetector(
-                            onTap: (){
-                              print(i);
-                               Navigator.of(context).push(_createroute(snapshot.data,i,widget._username.toString()));
-                            },
-                                    child: Container(
-                              
-                                    child:Wrap(
-                                    children:<Widget>[
-                                         Padding(
-                 padding: const EdgeInsets.all(8.0),
-                 child: Center(
-                   child: Text(i.toString(),
-                   style: GoogleFonts.pTSans(
-                      fontSize:20,
-                      fontWeight: FontWeight.w400
-                    ),
-                   ),
-                 ),
-               ),
-                                       
-                                        snapshot.data,
-                                      ]
-                                    )
+                                               Padding(
+                                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
+                                               child: Center(child: Text("Windows/Pc",
+                                                        style: GoogleFonts.pTSans(
+                                                   fontSize:30,
+                                               fontWeight: FontWeight.w600
+                                                        ),
+                                                     ),
+                                              
+                                                    ),
+                                                  ),
+                                                     Icon(Icons.computer)
+                                                       ],),
+ 
                                  
-                            ),
-                          );
-                     }
-                     
-                     );
-                     
-                },
-             );
-                }).toList(),
-                //a list to the builder
-                
-                options: CarouselOptions(
-                   // autoPlay:true,
-                    autoPlayInterval:Duration(seconds:Random(6).nextInt(10)),
-                    autoPlayCurve: Curves.easeInCirc,
-                 // height: MediaQuery.of(context).size.height/3,
-                    viewportFraction: 1.0
-                ),
-             ),
-                  );
-               
-               }),
-               
 
-          /* Card(
-                 color: Color.fromRGBO(248,220,4,1),
-                 child:Column(
-                   children:<Widget>[
-                     Padding(
-                 padding: const EdgeInsets.all(8.0),
-                 child: Text("PUBG(player unknown battlegrounds)"),
+
+
+
+                          Padding(
+                           padding: const EdgeInsets.only(top:10),
+                             
+                               child: Container(
+                               child: CarouselSlider(
+                                 items:pcmainui.map((e){
+                                  return GestureDetector(
+                                    onTap: (){Navigator.of(context).push(_createroute(e.imggg,e.gametitle.toString(),widget._username.toString()));},
+                                   child: Wrap(
+                                      children: <Widget>[
+                                        Center(
+                                          child: Text(e.gametitle.toString(),
+                                             style: GoogleFonts.pTSans(
+                                                fontSize:20,
+                                                  fontWeight: FontWeight.w800
+                                                        ),
+                                                ),
+                                        ),
+                                        Hero(
+                                          tag:"hero2",
+                                            child: Container(
+                                            width: MediaQuery.of(context).size.width/1.01,
+                                             child: Card(
+                                               elevation: 100,
+                                               child: Image.memory(e.imggg,fit: BoxFit.cover,)),
+                                           ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                 }).toList(),
+                                  options: CarouselOptions(
+                                         autoPlay:true,
+                                            autoPlayInterval:Duration(seconds:5),
+                                            autoPlayCurve: Curves.fastOutSlowIn,
+                                            viewportFraction: 1.0
+                                      ),),
+                             ),
+                           
+                         ),
+
+
+
+
+                         Row(children: <Widget>[
+                     
+                   Padding(
+                     padding: const EdgeInsets.fromLTRB(10, 20, 0, 10),
+                     child: Center(
+                      child: Text("Xbox:One",
+                      style: GoogleFonts.pTSans(
+                        fontSize:30,
+                        fontWeight: FontWeight.w600
+                      ),
+                      )
+                     ),
+                   ),
+                   Icon(MaterialIcons.gamepad)
+
+                  ],),
+
+
+
+
+
+
+
+
+
+
+
+
+                         Padding(
+                           padding: const EdgeInsets.only(top:10),
+                             
+                               child: Container(
+                               child: CarouselSlider(
+                                 items:xboxmainui.map((e){
+                                  return GestureDetector(
+                                    onTap: (){Navigator.of(context).push(_createroute(e.imggg,e.gametitle.toString(),widget._username.toString()));},
+                                   child: Wrap(
+                                      children: <Widget>[
+                                        Center(
+                                          child: Text(e.gametitle.toString(),
+                                             style: GoogleFonts.pTSans(
+                                                fontSize:20,
+                                                  fontWeight: FontWeight.w800
+                                                        ),
+                                                ),
+                                        ),
+                                        Hero(
+                                          tag:"hero3",
+                                            child: Container(
+                                            width: MediaQuery.of(context).size.width/1.01,
+                                             child: Card(
+                                               elevation: 100,
+                                               child: Image.memory(e.imggg,fit: BoxFit.cover,)),
+                                           ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                 }).toList(),
+                                  options: CarouselOptions(
+                                         autoPlay:true,
+                                            autoPlayInterval:Duration(seconds:5),
+                                            autoPlayCurve: Curves.fastOutSlowIn,
+                                            viewportFraction: 1.0
+                                      ),),
+                             ),
+                           
+                         ),
+                         
+                         
+                                    ],)
+                                  );
+                             });
+                             
+                             
+                             }
+
+
+
+
+                    if(desision==1)
+                    {
+                      final double wid=MediaQuery.of(context).size.width;
+                      return  Column(
+           children: <Widget>[
+             Padding(
+               padding: const EdgeInsets.only(top:30,bottom:20),
+               child: Row(
+                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                 children: <Widget>[
+                   Padding(
+                     padding: const EdgeInsets.only(left:30),
+                     child: Align(
+                       alignment: Alignment.center,
+                                        child: Text("UTS CHAT",
+           style: GoogleFonts.pTSans(
+               fontSize:20,
+               fontWeight:FontWeight.w700
+           ),
+           ),
+                     ),
+                   ),
+
+
+
+                   Padding(
+                     padding: const EdgeInsets.only(right:30),
+                     child: Row(
+                       children: <Widget>[
+                         Align(
+                           alignment: Alignment.centerRight,
+                                            
+                            
+                             child: StreamBuilder(
+                               stream:  FirebaseDatabase.instance.reference().child("users/userdetails/"+widget._username.toString()+"/friendrequest").onValue,
+
+                               builder: (context, snap) {
+                                
+                                 if(snap.hasData && !snap.hasError && snap.data.snapshot.value != null)
+                                 {
+                                   Icon _icn=Icon(MaterialCommunityIcons.bell_alert,color: Colors.redAccent[700],);
+                                  return NootifyIcon(widget._username.toString(),_icn);
+                                 }
+                                  Icon _icn=Icon(MaterialCommunityIcons.bell,color: Color.fromRGBO(39, 47, 55,1),);
+                                 return NootifyIcon(widget._username.toString(),_icn);
+                               }
+                             ),
+                           
+                         ),
+                         Align(
+                           alignment: Alignment.centerRight,
+                                          
+                             
+                             child: AddFriend(widget._username.toString()),
+                           
+                         ),
+                       ],
+                     ),
+                   )
+                 ],
                ),
-
-                CarouselSlider(
-                     
-                 items: [1,2,3,4,5].map((i) {
-                      return Builder(
-                   builder: (BuildContext context) {
-                    return Container(
-                     width: MediaQuery.of(context).size.width,
-                     margin: EdgeInsets.symmetric(horizontal: 5.0),
-                      decoration: BoxDecoration(
-                       color: Colors.amber
-                  ),
-             child: Image.asset("images/bkgrnd.png",fit: BoxFit.cover,)
-                   );
-                },
-             );
-                }).toList(),
-                //a list to the builder
-                
-                options: CarouselOptions(
-                  autoPlay:true,
-                  autoPlayInterval:Duration(seconds:3),
-                  autoPlayCurve: Curves.fastOutSlowIn,
-                ),
              ),
-                   ]
-                 )
-               ),*/
+             Chatui(widget._username)
+           ],
+         );
+                    }
+
+             if(desision==2)
+             {
+               return Settings();
+             }
 
 
-
-          ],
-          )
-                 ),
+           }
+           
+           
+         )
+           
         
 
 
@@ -482,8 +467,8 @@ class _HomePageState extends State<HomePage> {
 
     
     );
-       }
-       if(index==1)
+  }      
+       /*if(index==1)
        {
          return Scaffold(
       backgroundColor: Color.fromRGBO(248,220,4,1),
@@ -607,10 +592,10 @@ class _HomePageState extends State<HomePage> {
 
     
     
-  }
+  }*/
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-Route _createroute(Image img,String ss,String _username)
+Route _createroute(Uint8List img,String ss,String _username)
 {
   return PageRouteBuilder(
     pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation)=>Dummy(img,ss.toString(),_username.toString()),
