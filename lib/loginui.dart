@@ -1,10 +1,13 @@
+import 'dart:async';
 import 'dart:ui';
-import 'package:fire/mainhomepage.dart';
+import 'package:fire/settinguptheapp/settinguptheapp.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_colored_progress_indicators/flutter_colored_progress_indicators.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class Loginui extends StatefulWidget {
   @override
   _LoginuiState createState() => _LoginuiState();
@@ -19,9 +22,16 @@ class _LoginuiState extends State<Loginui> {
  TextEditingController _usernameLogin,_passwordLogin,_username;
  //TextEditingController _regusername,_regemail,_regpassword,_regphonenumber;
  static String errorMessage;
+  var controller=new StreamController();
+ Stream _notify;
+ static bool _yeilding=true;
+  
  void initState()
  {
+   _yeilding=true;
    super.initState();
+    _notify=controller.stream;
+  controller.add("dsdsd");
   errorMessage=null;
   _usernameLogin=TextEditingController();
   _passwordLogin=TextEditingController();
@@ -156,11 +166,7 @@ AuthResult uuu=await _auth.signInWithEmailAndPassword(email: _usernameLogin.text
                                             ),
                                                 prefixIcon: const Icon(Icons.email, color: Colors.green,),
                                                 prefixText: ' ',
-                                               suffixText: 'example@..mail.com',
-                                                suffixStyle:  GoogleFonts.pTSans(
-                                              color: Color.fromRGBO(248,220,4,1),
-                                              fontSize: 18
-                                            ),
+                                               
                                                border: OutlineInputBorder(borderSide:  new BorderSide(color:Color.fromRGBO(248,220,4,1) ))   
                                              ),
                                              
@@ -231,8 +237,16 @@ AuthResult uuu=await _auth.signInWithEmailAndPassword(email: _usernameLogin.text
                                       
                                           ],
                                         ),
-
-                                         Center(
+                                              
+                                          StreamBuilder(
+                                           stream:_notify,
+                                           builder: (context, snapshot) {
+                                             print("dsdsd");
+                                             if(snapshot.hasData)
+                                             {
+                                               if(_yeilding==true)
+                                               {
+                                               return Center(
                                            child: Padding(
                                              padding: const EdgeInsets.all(8.0),
                                              child: FlatButton(onPressed: (){
@@ -243,16 +257,32 @@ AuthResult uuu=await _auth.signInWithEmailAndPassword(email: _usernameLogin.text
                                                      );*/
                                                setState(() {
                                                  Future<void>val=_loginVerify();
-                                                 val.then((s){
+                                                 _yeilding=false;
+                                                 controller.add("esd");
+                                                 val.then((s)async{
                                                    if(errorMessage==null)
                                                    {
+                                                     await FirebaseDatabase.instance.reference().child("users/userdetails/"+_username.text).update(
+                                                       {
+                                                         "isactive":"active"
+                                                       }
+                                                     );
                                                      
+                                                     controller.close();
+                                                     SharedPreferences _inst= await SharedPreferences.getInstance();
+                                                     _inst.setString("username", _username.text);
+
                                                      Navigator.pushAndRemoveUntil(
                                                     context,
-                                                     MaterialPageRoute(builder: (context) => HomePage(_username.text)),
+                                                     MaterialPageRoute(builder: (context) => SettingUpTheData(_username.text)),
                                                     (Route<dynamic> route) => false,
                                                      );
                                                    }else{
+                                                     _passwordLogin.clear();
+                                                     _usernameLogin.clear();
+                                                     _username.clear();
+                                                     _yeilding=true;
+                                                     controller.add("cxcxc");
                                                      print(errorMessage);
                                                      _showDialog();
                                                    }
@@ -272,7 +302,42 @@ AuthResult uuu=await _auth.signInWithEmailAndPassword(email: _usernameLogin.text
                                                ),
                               
                                            ),
+                                         );
+                                               }else{
+                                                 return Center(
+                                                   child: Container(
+                                                     height: 30,
+                                                     width: 30,
+                                                     child: ColoredCircularProgressIndicator()
+                                                   ),
+                                                 );
+                                               }
+                                               
+                                             }
+                                             
+                                           }
                                          ),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                        
 
 
                                          Padding(
