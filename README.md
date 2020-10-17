@@ -19,3 +19,10 @@ samples, guidance on mobile development, and a full API reference.
 "# flutter_UTS" 
 "# flutter_UTS" 
 # flutter_UTS
+the app is still under development,major features may not be avalible.
+the BETA screenshots below:
+![](https://raw.githubusercontent.com/Shanawaz444/flutter_UTS/master/Screenshot_20201018-020346.jpg?token=AN7HH62WRT7KBK533HBQV4C7RNQ2K)
+![](https://raw.githubusercontent.com/Shanawaz444/flutter_UTS/master/Screenshot_20201018-020346.jpg?token=AN7HH62WRT7KBK533HBQV4C7RNQ2K)
+![](https://raw.githubusercontent.com/Shanawaz444/flutter_UTS/master/Screenshot_20201018-020346.jpg?token=AN7HH62WRT7KBK533HBQV4C7RNQ2K)
+![](https://raw.githubusercontent.com/Shanawaz444/flutter_UTS/master/Screenshot_20201018-020346.jpg?token=AN7HH62WRT7KBK533HBQV4C7RNQ2K)
+![](https://raw.githubusercontent.com/Shanawaz444/flutter_UTS/master/Screenshot_20201018-020346.jpg?token=AN7HH62WRT7KBK533HBQV4C7RNQ2K)
