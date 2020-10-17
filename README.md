@@ -1,11 +1,12 @@
 # UNITE THROUGH E-SPORT
 
-A new Flutter project.
+The app which unites the esport players all around the world,with out exposing there private information.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
-
+This is basically an lite version of discord in which you can make friends just by sharing the username and chat with them, you can select the friends according the
+game you play.
+   
 A few resources to get you started if this is your first Flutter project:
 
 - [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
