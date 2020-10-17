@@ -22,7 +22,9 @@ samples, guidance on mobile development, and a full API reference.
 the app is still under development,major features may not be avalible.
 the BETA screenshots below:
 ![](https://raw.githubusercontent.com/Shanawaz444/flutter_UTS/master/Screenshot_20201018-020346.jpg?token=AN7HH62WRT7KBK533HBQV4C7RNQ2K)
-![](https://raw.githubusercontent.com/Shanawaz444/flutter_UTS/master/Screenshot_20201018-020346.jpg?token=AN7HH62WRT7KBK533HBQV4C7RNQ2K)
-![](https://raw.githubusercontent.com/Shanawaz444/flutter_UTS/master/Screenshot_20201018-020346.jpg?token=AN7HH62WRT7KBK533HBQV4C7RNQ2K)
-![](https://raw.githubusercontent.com/Shanawaz444/flutter_UTS/master/Screenshot_20201018-020346.jpg?token=AN7HH62WRT7KBK533HBQV4C7RNQ2K)
-![](https://raw.githubusercontent.com/Shanawaz444/flutter_UTS/master/Screenshot_20201018-020346.jpg?token=AN7HH62WRT7KBK533HBQV4C7RNQ2K)
+![](https://raw.githubusercontent.com/Shanawaz444/flutter_UTS/master/Screenshot_20201018-020101.jpg?token=AN7HH62THTEH5YDREU2GNP27RNRFI)
+![](https://raw.githubusercontent.com/Shanawaz444/flutter_UTS/master/Screenshot_20201018-020459.jpg?token=AN7HH65CZ2OVPGTCSV3A2E27RNRHM)
+![](https://raw.githubusercontent.com/Shanawaz444/flutter_UTS/master/Screenshot_20201018-020520.jpg?token=AN7HH647IKKONIM2V2M4PWS7RNRI6)
+![](https://raw.githubusercontent.com/Shanawaz444/flutter_UTS/master/Screenshot_20201018-020623.jpg?token=AN7HH6ZCDJ5ML446NHSYUS27RNRLA)
+![](https://raw.githubusercontent.com/Shanawaz444/flutter_UTS/master/Screenshot_20201018-020727.jpg?token=AN7HH6Z4PCROSZ4G6WEWAWS7RNRMQ)
+![](https://raw.githubusercontent.com/Shanawaz444/flutter_UTS/master/Screenshot_20201018-020526.jpg?token=AN7HH633OH4OU22WCJ3Y35C7RNRP4)
