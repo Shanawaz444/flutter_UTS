@@ -35,7 +35,7 @@ class _ChatuiState extends State<Chatui> {
          for(var i in vv.keys)
          {
            
-           _friendrequests.add(i.toString());
+           _friendrequests.add(vv[i.toString()].toString());
          }
          print(vv.keys.toString()+"assas");
         return  Expanded(

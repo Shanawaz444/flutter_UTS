@@ -1,15 +1,14 @@
 import 'dart:async';
 
 import 'package:fire/chatui/chatrectbubble.dart';
-import 'package:fire/model/chatbrain.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 class Chattingui extends StatelessWidget {
   final String name;
   final String _currentusername;
-  Chattingui(this.name,this._currentusername);
+  final Widget m;
+  Chattingui(this.name,this._currentusername,this.m);
   final TextEditingController msg=TextEditingController();
   List<dynamic>_chat=[];
   static int lengthof_chat=0;
@@ -42,14 +41,36 @@ class Chattingui extends StatelessWidget {
     return Scaffold(
       backgroundColor:  Color.fromRGBO(248,220,4,1),
       appBar: AppBar(
+        
         backgroundColor:Color.fromRGBO(248,220,4,1),
         elevation: 0.0,
-        title: Text(name.toUpperCase(),
+        title: Row(
+          children: <Widget>[
+            Padding(
+                        padding: const EdgeInsets.only(right:8.0),
+                        child:ClipOval(
+                child:Container(
+                  color: Colors.transparent,
+                  height: MediaQuery.of(context).size.height/15,
+                  width: MediaQuery.of(context).size.width/8.5,
+                  child:
+                         m
+                       
+                      
+                  
+                )
+              ),
+                        
+                      ),
+
+            Text(name.toUpperCase(),
         style: GoogleFonts.pTSans(
                     fontSize:25,
                     fontWeight: FontWeight.w600,
                     color:Color.fromRGBO(39, 47, 55,1)
                   ),),
+          ],
+        ),
 
                   actions: <Widget>[IconButton(icon: Icon(Icons.ac_unit), onPressed: (){print(lengthof_chat);})],
       ),
